@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hvdomingues.course.entities.User;
 
+
 public interface UserRepository extends JpaRepository<User, Long>{
 	
 }
