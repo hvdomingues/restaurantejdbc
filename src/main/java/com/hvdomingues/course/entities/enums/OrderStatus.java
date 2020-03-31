@@ -10,8 +10,15 @@ public enum OrderStatus {
 	
 	private int code;
 	
-	private OrderStatus(int code) {
+	private String descripton;
+	
+	public String getDescripton() {
+		return descripton;
+	}
+
+	private OrderStatus(int code, String descriptionParam) {
 		this.code = code;
+		this.descripton = descriptionParam;
 	}
 	
 	public int getCode() {
