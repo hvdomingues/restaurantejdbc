@@ -1,27 +1,15 @@
 package com.hvdomingues.course.services;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.hvdomingues.course.entities.Order;
-import com.hvdomingues.course.repositories.OrderRepository;
 
-@Service
-public class OrderService {
 
-	@Autowired
-	private OrderRepository repository;
+public interface OrderService {
+
 	
-	public List<Order> findAll(){
-		return repository.findAll();
-	}
+	List<Order> findAll();
 	
-	public Order findById(Long id) {
-		Optional<Order> obj = repository.findById(id);
-		return obj.get();
-	}
+	Order findById(Long id);
 	
 }
