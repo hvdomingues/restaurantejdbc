@@ -31,5 +31,10 @@ public class UserServiceImpl implements UserService{
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
+
+	@Override
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 	
 }

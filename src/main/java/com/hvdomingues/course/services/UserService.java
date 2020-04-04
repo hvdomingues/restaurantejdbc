@@ -13,4 +13,6 @@ public interface UserService {
 	
 	User insert(User obj);
 	
+	void delete(Long id);
+	
 }
