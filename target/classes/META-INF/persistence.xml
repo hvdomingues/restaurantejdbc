@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+    xmlns="http://java.sun.com/xml/ns/persistence" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    
+    <!-- Define a name used to get an entity manager. Define that you will 
+    complete transactions with the DB  -->
+    <persistence-unit name="DinnerApp" transaction-type="RESOURCE_LOCAL">
+    
+        <!-- Define the class for Hibernate which implements JPA -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Define the object that should be persisted in the database -->
+        <class>com.hvdomingues.DinnerApp.entities.Bill</class>
+        <class>com.hvdomingues.DinnerApp.entities.IndividualBill</class>
+        <properties>
+            <!-- Driver for DB database -->
+            <property name="javax.persistence.jdbc.driver" 
+            	value="com.mysql.cj.jdbc.Driver" />
+            <!-- URL for DB -->
+            <property name="javax.persistence.jdbc.url" 
+            	value="jdbc:mysql://localhost/restaurantejdbc" />
+            <!-- Username -->
+            <property name="javax.persistence.jdbc.user" 
+            	value="dbadmin" />
+            <!-- Password -->
+            <property name="javax.persistence.jdbc.password"
+            	 value="86334" />
+            	 
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+        </properties>
+    </persistence-unit>
+</persistence>
