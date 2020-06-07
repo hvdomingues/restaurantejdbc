@@ -23,13 +23,17 @@ public class Payment implements Serializable{
 	
 	@Column(name = "PaymentMoment")
 	private Instant payMoment;
+	//criar getters e setters
+	@Column(name = "PaymentValue", nullable = true)
+	private Double payValue;
 	
 	public Payment() {	
 	}
 
-	public Payment(Integer id, Instant payMoment) {
+	public Payment(Integer id, Instant payMoment, Double payValue) {
 		this.id = id;
 		this.payMoment = payMoment;
+		this.payValue = payValue;
 	}
 
 	public Integer getId() {
@@ -46,6 +50,16 @@ public class Payment implements Serializable{
 
 	public void setPayMoment(Instant payMoment) {
 		this.payMoment = payMoment;
+	}
+
+	
+	
+	public Double getPayValue() {
+		return payValue;
+	}
+
+	public void setPayValue(Double payValue) {
+		this.payValue = payValue;
 	}
 
 	@Override
@@ -75,7 +89,7 @@ public class Payment implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Payment [id=" + id + ", payMoment=" + payMoment + "]";
+		return "Payment [id=" + id + ", payMoment=" + payMoment + ", payValue=" + payValue + "]";
 	}
 	
 	
