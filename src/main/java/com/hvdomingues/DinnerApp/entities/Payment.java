@@ -23,7 +23,7 @@ public class Payment implements Serializable{
 	
 	@Column(name = "PaymentMoment")
 	private Instant payMoment;
-	//criar getters e setters
+
 	@Column(name = "PaymentValue", nullable = true)
 	private Double payValue;
 	
@@ -61,6 +61,8 @@ public class Payment implements Serializable{
 	public void setPayValue(Double payValue) {
 		this.payValue = payValue;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

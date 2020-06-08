@@ -5,13 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.hvdomingues.DinnerApp.entities.IndividualBill;
 import com.hvdomingues.DinnerApp.entities.Payment;
 
 @Embeddable
-@Table(name = "billpayment")
 public class BillPaymentPK implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -24,13 +22,6 @@ public class BillPaymentPK implements Serializable{
 	@JoinColumn(name = "PaymentID")
 	private Payment payment;
 
-	public BillPaymentPK() {
-	}
-	
-	public BillPaymentPK(IndividualBill individualBill, Payment payment) {
-		this.individualBill = individualBill;
-		this.payment = payment;
-	}
 
 	public IndividualBill getIndividualBill() {
 		return individualBill;
@@ -78,14 +69,6 @@ public class BillPaymentPK implements Serializable{
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "BillPaymentPK [individualBill=" + individualBill + ", payment=" + payment + "]";
-	}
-	
-	
-	
 	
 	
 }

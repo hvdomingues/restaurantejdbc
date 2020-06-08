@@ -14,6 +14,7 @@
         <class>com.hvdomingues.DinnerApp.entities.Bill</class>
         <class>com.hvdomingues.DinnerApp.entities.IndividualBill</class>
         <class>com.hvdomingues.DinnerApp.entities.Payment</class>
+        <class>com.hvdomingues.DinnerApp.entities.BillPayment</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" 
