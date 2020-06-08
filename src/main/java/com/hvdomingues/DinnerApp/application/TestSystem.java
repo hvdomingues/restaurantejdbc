@@ -14,7 +14,7 @@ public class TestSystem {
 		BillServiceImpl billService = new BillServiceImpl();
 
 		//Testando salvar contas, deu certo
-		/*Bill bill1 = new Bill(6);
+		Bill bill1 = new Bill(6);
 		Bill bill2 = new Bill(3);
 		Bill bill3 = new Bill(7);
 		Bill bill4 = new Bill(9);
@@ -28,19 +28,19 @@ public class TestSystem {
 
 		for (Bill bill : allBill) {
 			System.out.println(bill);
-		}*/
+		}
 
 		//Testando pegar por ID, deu certo
-		Bill bill5 = billService.getByID(168);
+		Bill bill5 = billService.getByID(1);
 		System.out.println(bill5);
 		
 		//Testando update no número da mesa
-		System.out.println(billService.changeTabNumber(212, 25));
+		System.out.println(billService.changeTabNumber(2, 25));
 		
 		billService.closeEM();
 		
 		
-
+		
 		
 		
 		

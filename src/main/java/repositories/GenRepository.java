@@ -11,18 +11,17 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-//Teste de repositório genérico
+//Repositório genérico
 public class GenRepository<T> {
 
-	// Descobrir onde fechar, código: ENTITY_MANAGER_FACTORY.close();
+	//Descobrir como fechar isso, código: ENTITY_MANAGER_FACTORY.close();
 	private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("DinnerApp");
 
-	// Teste @Transactional
-	EntityManager em2 = ENTITY_MANAGER_FACTORY.createEntityManager();
+	//Inicialização do EntityManager
+	EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 
+	@Transactional
 	public String saveAll(List<T> toSave) {
-
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction et = null;
 
 		try {
@@ -43,16 +42,13 @@ public class GenRepository<T> {
 				et.rollback();
 			}
 			ex.printStackTrace();
-		} finally {
-			em.close();
-
 		}
 		return "Deu certo";
 	}
 
+	@Transactional
 	public List<T> getAll() {
 
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT x FROM " + returnedClass().getName() + " x WHERE x.id IS NOT NULL";
 
 		TypedQuery<T> tq = em.createQuery(query, returnedClass());
@@ -64,15 +60,12 @@ public class GenRepository<T> {
 			return itensList;
 		} catch (NoResultException ex) {
 			ex.printStackTrace();
-		} finally {
-			em.close();
 		}
 		return null;
 	}
 
-	public T getByIDOriginal(Integer id) {
-
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+	@Transactional
+	public T getByID(Integer id) {
 		String query = "SELECT x FROM " + returnedClass().getName() + " x WHERE x.id = :id";
 
 		TypedQuery<T> tq = em.createQuery(query, returnedClass());
@@ -84,33 +77,8 @@ public class GenRepository<T> {
 			obj = tq.getSingleResult();
 		} catch (NoResultException ex) {
 			ex.printStackTrace();
-		} finally {
-			em.close();
 		}
 		return obj;
-	}
-
-	// Testando anotação para o update
-	public T getByID(Integer id) {
-		String query = "SELECT x FROM " + returnedClass().getName() + " x WHERE x.id = :id";
-
-		TypedQuery<T> tq = em2.createQuery(query, returnedClass());
-		tq.setParameter("id", id);
-		// Setando objeto genérico
-		T obj = null;
-
-		try {
-			obj = tq.getSingleResult();
-		} catch (NoResultException ex) {
-			ex.printStackTrace();
-		} finally {
-			// em2.close();
-		}
-		return obj;
-	}
-	
-	public void closeEM() {
-		em2.close();
 	}
 
 	// Update no banco de dados, metódo para alteração nos services
@@ -118,16 +86,24 @@ public class GenRepository<T> {
 	public T update(T objNovo) {
 
 		EntityTransaction et = null;
-		
-		et = em2.getTransaction();
+
+		et = em.getTransaction();
 		et.begin();
 
-		em2.persist(objNovo);
-		
+		em.persist(objNovo);
+
 		et.commit();
 
 		return objNovo;
 
+	}
+
+	// Fechar o EntityManager
+	public void closeEM() {
+		if(em != null) {
+			em.close();
+		}
+		
 	}
 
 	// Método para retornar o tipo da classe genérica utilizando Reflection

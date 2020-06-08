@@ -53,7 +53,7 @@ CREATE TABLE `bills` (
   `TableNumber` int DEFAULT NULL,
   `StatusBill` int DEFAULT NULL,
   PRIMARY KEY (`BillID`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `bills` (
 
 LOCK TABLES `bills` WRITE;
 /*!40000 ALTER TABLE `bills` DISABLE KEYS */;
-INSERT INTO `bills` VALUES (145,6,0),(146,3,0),(147,7,0),(148,9,0);
+INSERT INTO `bills` VALUES (1,6,0),(2,25,0),(3,7,0),(4,9,0);
 /*!40000 ALTER TABLE `bills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,6 +183,7 @@ DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `PaymentID` int unsigned NOT NULL AUTO_INCREMENT,
   `PaymentMoment` date DEFAULT NULL,
+  `PaymentValue` double NOT NULL,
   PRIMARY KEY (`PaymentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -264,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-07  1:03:10
+-- Dump completed on 2020-06-07 21:54:28

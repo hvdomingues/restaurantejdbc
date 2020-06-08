@@ -4,7 +4,7 @@ import com.hvdomingues.DinnerApp.entities.Bill;
 
 import repositories.GenRepository;
 
-public class BillServiceImpl extends GenRepository<Bill> {
+public class BillServiceImpl extends GenRepository<Bill> implements BillService{
 	
 	public Bill changeTabNumber(Integer billId, Integer newTabNumber) {
 		
