@@ -1,6 +1,7 @@
 package com.hvdomingues.DinnerApp.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -33,6 +35,9 @@ public class IndividualBill implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "BillID")
 	private Bill bill;
+	
+	@OneToMany(mappedBy = "indBill")
+	private List<Order> orders;
 	
 	
 	
@@ -77,8 +82,14 @@ public class IndividualBill implements Serializable{
 		this.tabPosition = tabPosition;
 	}
 	
-	
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void addOrder(Order order) {
+		this.orders.add(order);
+	}
 
 	@Override
 	public int hashCode() {
