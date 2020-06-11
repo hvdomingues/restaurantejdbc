@@ -1,10 +1,9 @@
-package com.hvdomingues.DinnerApp;
+package com.hvdomingues.DinnerApp.application;
 
-import com.hvdomingues.DinnerApp.entities.Bill;
 import com.hvdomingues.DinnerApp.services.BillServiceImpl;
 
 
-public class App {
+public class TestApp {
 	public static void main(String[] args) {
 
 		// Teste do EntityBuilder
@@ -32,13 +31,9 @@ public class App {
 		
 		BillServiceImpl billRepo = new BillServiceImpl();
 		
-		Bill bill1 = billRepo.getBillRepo().changeTabNumber(billRepo.getBillRepo().getByID(13), 13);
-		
-		if(bill1 == null) {
-			System.out.println("Tem uma conta aberta com esse número de mesa.");
-		}else {
-			System.out.println("Numero da mesa da conta " + bill1.getId() + " alterada para " + bill1.getTableNumber() + " com sucesso.");
-		}
+
+		billRepo.changeTabNumber(billRepo.getBillRepo().getByID(13), 39);
+
 		
 		billRepo.getBillRepo().closeEM();
 	
