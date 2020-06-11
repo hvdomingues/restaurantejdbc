@@ -12,7 +12,11 @@ import com.hvdomingues.DinnerApp.services.servicesInterfaces.ICategoryService;
 public class CategoryServiceImpl implements ICategoryService{
 	
 	@Autowired
-	private CategoryRepositoryImpl categoryRepository = new CategoryRepositoryImpl();
+	private CategoryRepositoryImpl categoryRepository;
+	
+	public CategoryServiceImpl() {
+		this.categoryRepository = new CategoryRepositoryImpl();
+	}
 	
 	public CategoryRepositoryImpl getRepo() {
 		return categoryRepository;

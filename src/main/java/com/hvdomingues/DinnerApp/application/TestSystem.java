@@ -12,9 +12,8 @@ import com.hvdomingues.DinnerApp.entities.Order;
 import com.hvdomingues.DinnerApp.entities.OrderItem;
 import com.hvdomingues.DinnerApp.entities.Payment;
 import com.hvdomingues.DinnerApp.entities.Product;
-
-import repositories.GenRepository;
-import services.BillServiceImpl;
+import com.hvdomingues.DinnerApp.repositories.GenRepository;
+import com.hvdomingues.DinnerApp.services.BillServiceImpl;
 
 public class TestSystem {
 
@@ -28,23 +27,23 @@ public class TestSystem {
 		Bill bill3 = new Bill(7);
 		Bill bill4 = new Bill(9);
 
-		System.out.println(billService.saveAll(Arrays.asList(bill1,bill2,bill3,bill4)));
+		System.out.println(billService.getBillRepo().saveAll(Arrays.asList(bill1,bill2,bill3,bill4)));
 
 		//Testando pegar todas as contas, deu certo
 		List<Bill> allBill = null;
 
-		allBill = billService.getAll();
+		allBill = billService.getBillRepo().getAll();
 
 		for (Bill bill : allBill) {
 			System.out.println(bill);
 		}
 
 		//Testando pegar por ID, deu certo
-		Bill bill5 = billService.getByID(1);
+		Bill bill5 = billService.getBillRepo().getByID(1);
 		System.out.println(bill5);
 		
 		//Testando update no número da mesa, deu certo
-		System.out.println(billService.changeTabNumber(2, 25));
+		System.out.println(billService.getBillRepo().changeTabNumber(bill1, 25));
 		
 		//Testando BillPayment, deu certo
 		IndividualBill indBill1 = new IndividualBill(bill5, "Henrique", 2);
@@ -95,7 +94,7 @@ public class TestSystem {
 		productRepository.closeEM();
 		orderRepository.closeEM();
 		orderItemRepository.closeEM();
-		billService.closeEM();
+		billService.getBillRepo().closeEM();
 		indBillRepository.closeEM();
 		payRepository.closeEM();
 		billPayRepository.closeEM();

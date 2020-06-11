@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -14,43 +13,35 @@ import javax.transaction.Transactional;
 //Repositório genérico
 public class GenRepository<T> {
 
-	//Descobrir como fechar isso, código: ENTITY_MANAGER_FACTORY.close();
+	// Descobrir como fechar isso, código: ENTITY_MANAGER_FACTORY.close();
 	private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("DinnerApp");
 
-	//Inicialização do EntityManager
+	// Inicialização do EntityManager
 	EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 
 	@Transactional
 	public List<T> saveAll(List<T> toSave) {
 		EntityTransaction et = null;
 
-		try {
-			// Objeto genérico x da lista "toSave", tipo T
-			for (T x : toSave) {
-				if (!em.getTransaction().isActive()) {
-					et = em.getTransaction();
-					et.begin();
-				}
+		// Objeto genérico x da lista "toSave", tipo T
+		for (T x : toSave) {
+			if (!em.getTransaction().isActive()) {
+				et = em.getTransaction();
+				et.begin();
+			}
 
-				em.persist(x);
-			}
-			et.commit();
+			em.persist(x);
 		}
-		// Exceção genérica, mudar depois
-		catch (Exception ex) {
-			if (et != null) {
-				et.rollback();
-			}
-			ex.printStackTrace();
-		}
+		et.commit();
+
 		return toSave;
 	}
-	
+
 	@Transactional
 	public T saveOne(T toSave) {
-		
+
 		EntityTransaction et = null;
-		
+
 		if (!em.getTransaction().isActive()) {
 			et = em.getTransaction();
 			et.begin();
@@ -58,9 +49,9 @@ public class GenRepository<T> {
 
 		em.persist(toSave);
 		et.commit();
-		
+
 		return toSave;
-		
+
 	}
 
 	@Transactional
@@ -72,14 +63,11 @@ public class GenRepository<T> {
 
 		List<T> itensList;
 
-		try {
-			itensList = tq.getResultList();
-			return itensList;
-		} catch (NoResultException ex) {
-			ex.printStackTrace();
-		}
-		return null;
+		itensList = tq.getResultList();
+		return itensList;
+
 	}
+	
 
 	@Transactional
 	public T getByID(Integer id) {
@@ -89,15 +77,11 @@ public class GenRepository<T> {
 		tq.setParameter("id", id);
 		// Setando objeto genérico
 		T obj = null;
-		
+
 		em.find(returnedClass(), id);
-		
-		try {
-			obj = tq.getSingleResult();
-			
-		} catch (NoResultException ex) {
-			ex.printStackTrace();
-		}
+
+		obj = tq.getSingleResult();
+
 		return obj;
 	}
 
@@ -120,10 +104,10 @@ public class GenRepository<T> {
 
 	// Fechar o EntityManager
 	public void closeEM() {
-		if(em != null) {
-			em.close();
+		if (em != null) {
+			em.close(); 
 		}
-		
+
 	}
 
 	// Método para retornar o tipo da classe genérica utilizando Reflection

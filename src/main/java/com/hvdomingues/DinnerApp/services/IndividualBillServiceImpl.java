@@ -12,7 +12,11 @@ import com.hvdomingues.DinnerApp.services.servicesInterfaces.IIndividualBillServ
 public class IndividualBillServiceImpl implements IIndividualBillService{
 	
 	@Autowired
-	private IndividualBillRepositoryImpl individualBillRepository = new IndividualBillRepositoryImpl();
+	private IndividualBillRepositoryImpl individualBillRepository;
+	
+	public IndividualBillServiceImpl() {
+		this.individualBillRepository = new IndividualBillRepositoryImpl();
+	}
 	
 	public IndividualBillRepositoryImpl getRepo() {
 		return individualBillRepository;

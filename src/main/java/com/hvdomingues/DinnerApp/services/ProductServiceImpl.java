@@ -12,7 +12,11 @@ import com.hvdomingues.DinnerApp.services.servicesInterfaces.IProductService;
 public class ProductServiceImpl implements IProductService{
 	
 	@Autowired
-	private ProductRepositoryImpl productRepository = new ProductRepositoryImpl();
+	private ProductRepositoryImpl productRepository;
+	
+	public ProductServiceImpl() {
+		this.productRepository = new ProductRepositoryImpl();
+	}
 	
 	public ProductRepositoryImpl getRepo() {
 		return productRepository;

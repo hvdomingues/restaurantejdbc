@@ -19,6 +19,8 @@ import com.hvdomingues.DinnerApp.services.OrderServiceImpl;
 import com.hvdomingues.DinnerApp.services.PaymentServiceImpl;
 import com.hvdomingues.DinnerApp.services.ProductServiceImpl;
 
+
+//Utilizado o site "https://refactoring.guru/pt-br/design-patterns/builder" para referências.
 public class EntityBuilder {
 
 	private Bill bill;

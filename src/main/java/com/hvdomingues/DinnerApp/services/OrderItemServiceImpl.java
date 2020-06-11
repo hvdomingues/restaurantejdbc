@@ -12,7 +12,11 @@ import com.hvdomingues.DinnerApp.services.servicesInterfaces.IOrderItemService;
 public class OrderItemServiceImpl implements IOrderItemService{
 	
 	@Autowired
-	private OrderItemRepositoryImpl orderItemRepository = new OrderItemRepositoryImpl();
+	private OrderItemRepositoryImpl orderItemRepository;
+	
+	public OrderItemServiceImpl() {
+		this.orderItemRepository = new OrderItemRepositoryImpl();
+	}
 	
 	public OrderItemRepositoryImpl getRepo() {
 		return orderItemRepository;

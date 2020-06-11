@@ -12,7 +12,11 @@ import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillPaymentService
 public class BillPaymentServiceImpl implements IBillPaymentService{
 	
 	@Autowired
-	private BillPaymentRepositoryImpl billPaymentRepository = new BillPaymentRepositoryImpl();
+	private BillPaymentRepositoryImpl billPaymentRepository;
+	
+	public BillPaymentServiceImpl() {
+		this.billPaymentRepository = new BillPaymentRepositoryImpl();
+	}
 	
 	public BillPaymentRepositoryImpl getRepo() {
 		return billPaymentRepository;
