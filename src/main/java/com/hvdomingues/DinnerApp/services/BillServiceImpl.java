@@ -1,10 +1,13 @@
 package com.hvdomingues.DinnerApp.services;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hvdomingues.DinnerApp.entities.Bill;
+import com.hvdomingues.DinnerApp.entities.exceptions.MyException;
 import com.hvdomingues.DinnerApp.repositories.BillRepositoryImpl;
 import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
 
@@ -19,9 +22,6 @@ public class BillServiceImpl implements IBillService{
 		this.billRepo = new BillRepositoryImpl();
 	}
 
-	public BillRepositoryImpl getBillRepo() {
-		return billRepo;
-	}
 	
 	@Override
 	public Bill changeTabNumber(Bill bill, Integer newTabNumber) {
@@ -48,7 +48,41 @@ public class BillServiceImpl implements IBillService{
 
 	@Override
 	public Bill getByID(Integer id) {
-		return this.billRepo.getByID(id);
+		return billRepo.getByID(id);
+	}
+
+	@Override
+	public List<Bill> getAll() {
+		return billRepo.getAll();
+	}
+
+
+	@Override
+	public List<Bill> saveAll(List<Bill> toSave) {
+		return billRepo.saveAll(toSave);
+	}
+
+
+	@Override
+	public Bill saveOne(Bill toSave) {
+		
+		List<Bill> bills = getAll();
+		try {
+			for (Bill x : bills) {
+				if (x.getStatusBill() == 0 && x.getTableNumber() == toSave.getTableNumber()) {
+
+					throw new MyException("Table already occupied by an active bill. Bill id: " + x.getId() + ".");
+				}
+			}
+
+		}
+
+		catch (MyException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
+		return billRepo.saveOne(toSave);
 	}
 	
 	

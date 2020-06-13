@@ -21,7 +21,7 @@ public class BillRepositoryImpl extends GenRepository<Bill> {
 			for (Bill x : bills) {
 				if (x.getStatusBill() == 0 && x.getTableNumber() == newTabNumber) {
 					// Teste de Exception personalizada
-					throw new MyException("Table already occupied by an active bill. Bill id: " + bill.getId() + ".");
+					throw new MyException("Table already occupied by an active bill. Bill id: " + x.getId() + ".");
 				}
 			}
 
@@ -36,21 +36,17 @@ public class BillRepositoryImpl extends GenRepository<Bill> {
 
 		return bill;
 	}
-
+	
+	
+	//Verifica se a conta já está fechada e verifica se foi paga através do fechamento das contas individuais. Caso as indBills estejam fechadas, logo a conta está paga.
 	public Bill closeBill(Bill bill) {
 
-		
-		
 		try {
-			
-			if(bill == null) {
-				throw new MyException("Essa conta é inexistente.");
-			}
 
 			if (bill.getStatusBill() == 1) {
 				throw new MyException("A conta já está fechada.");
 			}
-			
+
 			if (bill.getIndividualBills() != null) {
 				List<IndividualBill> indBills = bill.getIndividualBills();
 				List<IndividualBill> openedIndBills = new ArrayList<>();
@@ -61,12 +57,11 @@ public class BillRepositoryImpl extends GenRepository<Bill> {
 					}
 				}
 
-				if (openedIndBills.get(0) != null) {
+				if (openedIndBills.size() >= 1) {
 					throw new MyException("Ainda há contas individuais abertas. Contas:\n" + openedIndBills);
-				} else {
-					bill.setStatusBill(1);
-					update(bill);
 				}
+				bill.setStatusBill(1);
+				update(bill);
 
 			}
 		} catch (MyException e) {
@@ -76,5 +71,8 @@ public class BillRepositoryImpl extends GenRepository<Bill> {
 
 		return bill;
 	}
+	
+	
+	
 
 }

@@ -47,10 +47,10 @@ public class EntityBuilder {
 		BillServiceImpl billService = new BillServiceImpl();
 
 		// Persistindo objeto no BD
-		this.bill = billService.getBillRepo().saveOne(this.bill);
+		this.bill = billService.saveOne(this.bill);
 
 		// Fechando conexão
-		billService.getBillRepo().closeEM();
+		billService.closeService();;
 
 		return this.bill;
 
