@@ -23,8 +23,7 @@ public class BillServiceImpl implements IBillService{
 		return billRepo;
 	}
 	
-	/*Não seria melhor fazer um método desse tipo para todos os métodos do billRepo? O cliente não veria o billRepo, então excluiria a necessidade do getBillRepo.
-	 * Caso tivesse alguma outra lógica para ser feita no serviço, seria apenas escrevê-la nesses métodos. */
+	@Override
 	public Bill changeTabNumber(Bill bill, Integer newTabNumber) {
 		
 		bill = billRepo.changeTabNumber(bill, newTabNumber);
@@ -35,6 +34,21 @@ public class BillServiceImpl implements IBillService{
 		
 		return bill;
 		
+	}
+	
+	@Override
+	public Bill closeBill(Bill bill) {
+		return billRepo.closeBill(bill);
+	}
+
+	@Override
+	public void closeService() {
+		billRepo.closeEM();
+	}
+
+	@Override
+	public Bill getByID(Integer id) {
+		return this.billRepo.getByID(id);
 	}
 	
 	

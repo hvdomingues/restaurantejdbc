@@ -41,6 +41,7 @@ public class EntityBuilder {
 		this.bill.setId(id);
 		this.bill.setStatusBill(statusBill);
 		this.bill.setTableNumber(tableNumber);
+		
 
 		// Instanciando o serviço
 		BillServiceImpl billService = new BillServiceImpl();

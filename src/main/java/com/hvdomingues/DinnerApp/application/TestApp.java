@@ -1,6 +1,7 @@
 package com.hvdomingues.DinnerApp.application;
 
-import com.hvdomingues.DinnerApp.services.BillServiceImpl;
+import com.hvdomingues.DinnerApp.services.factories.ServiceFactory;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
 
 
 public class TestApp {
@@ -29,13 +30,17 @@ public class TestApp {
 		System.out.println(orderItem1);
 		*/
 		
-		BillServiceImpl billRepo = new BillServiceImpl();
+		ServiceFactory serviceFactory = new ServiceFactory();
+		
+		IBillService billService = serviceFactory.createBillService();
 		
 
-		billRepo.changeTabNumber(billRepo.getBillRepo().getByID(13), 39);
+		//System.out.println(billRepo.getBillRepo().getByID(1));
 
+		billService.closeBill(billService.getByID(22));
 		
-		billRepo.getBillRepo().closeEM();
+		
+		billService.closeService();
 	
 
 	}

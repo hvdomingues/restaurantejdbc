@@ -3,9 +3,9 @@ package com.hvdomingues.DinnerApp.entities;
 import java.io.Serializable;
 import java.util.List;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +29,7 @@ public class Bill implements Serializable{
 	@Column(name = "StatusBill", nullable = false)
 	private Integer statusBill;
 	
-	@OneToMany(mappedBy = "bill")
+	@OneToMany(mappedBy = "bill", fetch = FetchType.EAGER)
 	private List<IndividualBill> individualBills;
 	
 
@@ -72,6 +72,14 @@ public class Bill implements Serializable{
 	}
 	
 	
+	
+
+	public void setIndividualBills(List<IndividualBill> individualBills) {
+		this.individualBills = individualBills;
+	}
+
+
+
 
 	public List<IndividualBill> getIndividualBills() {
 		return individualBills;
@@ -108,10 +116,21 @@ public class Bill implements Serializable{
 		return true;
 	}
 
+
+
+
 	@Override
 	public String toString() {
-		return "Bill [id=" + id + ", tableNumber=" + tableNumber + ", statusBill=" + statusBill + "]";
+		return "Bill [id=" + id + ", tableNumber=" + tableNumber + ", statusBill=" + statusBill + ", individualBills="
+				+ individualBills + "]";
 	}
+
+	
+
+
+
+
+
 	
 	
 

@@ -10,6 +10,8 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import com.hvdomingues.DinnerApp.entities.exceptions.MyException;
+
 //Repositório genérico
 public class GenRepository<T> {
 
@@ -60,27 +62,30 @@ public class GenRepository<T> {
 		String query = "SELECT x FROM " + returnedClass().getName() + " x WHERE x.id IS NOT NULL";
 
 		TypedQuery<T> tq = em.createQuery(query, returnedClass());
+		
 
 		List<T> itensList;
-
+		
 		itensList = tq.getResultList();
 		return itensList;
 
 	}
-	
 
 	@Transactional
 	public T getByID(Integer id) {
-		String query = "SELECT x FROM " + returnedClass().getName() + " x WHERE x.id = :id";
 
-		TypedQuery<T> tq = em.createQuery(query, returnedClass());
-		tq.setParameter("id", id);
 		// Setando objeto genérico
 		T obj = null;
 
-		em.find(returnedClass(), id);
-
-		obj = tq.getSingleResult();
+		try {
+			obj = em.find(returnedClass(), id);
+			if(obj == null) {
+				throw new MyException("Not found by ID");
+			}
+			
+		} catch (MyException e) {
+			System.out.println(e.getMessage());
+		}
 
 		return obj;
 	}
@@ -105,7 +110,7 @@ public class GenRepository<T> {
 	// Fechar o EntityManager
 	public void closeEM() {
 		if (em != null) {
-			em.close(); 
+			em.close();
 		}
 
 	}

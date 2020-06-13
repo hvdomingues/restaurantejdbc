@@ -20,6 +20,7 @@ public class IndividualBill implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IndividualBillID", unique = true)
@@ -31,7 +32,6 @@ public class IndividualBill implements Serializable{
 	@Column(name = "TabPosition", nullable = false)
 	private Integer tabPosition;
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "BillID")
 	private Bill bill;
@@ -39,7 +39,14 @@ public class IndividualBill implements Serializable{
 	@OneToMany(mappedBy = "indBill")
 	private List<Order> orders;
 	
+	@Column(name = "StatusBill")
+	private Integer statusBill;
 	
+	@Column(name = "TotalPaid")
+	private Double totalPaid;
+	
+	@Column(name = "TipPaid")
+	private Double tipPaid;
 	
 	public IndividualBill() {}
 	
@@ -89,6 +96,33 @@ public class IndividualBill implements Serializable{
 
 	public void addOrder(Order order) {
 		this.orders.add(order);
+	}
+	
+	
+
+	public Integer getStatusBill() {
+		return statusBill;
+	}
+
+	public void setStatusBill(Integer statusBill) {
+		this.statusBill = statusBill;
+	}
+
+	public Double getTotalPaid() {
+		return totalPaid;
+	}
+
+	public void setTotalPaid(Double totalPaid) {
+		this.totalPaid = totalPaid;
+	}
+
+	public Double getTipPaid() {
+		return tipPaid;
+	}
+
+	//Recebe o valor total da conta individual, recebido no Service e calcula com base no valor total pago da conta individual a gorjeta paga.
+	public void setTipPaid(Double totalValue) {
+		this.tipPaid = this.totalPaid - totalValue;
 	}
 
 	@Override
