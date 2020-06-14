@@ -34,8 +34,9 @@ public class Bill implements Serializable{
 	
 
 	
-	public Bill() {}
-	
+	public Bill() {
+		this.statusBill = 0;
+	}
 	
 	
 	
@@ -85,10 +86,6 @@ public class Bill implements Serializable{
 		return individualBills;
 	}
 
-
-	public void addIndividualBills(IndividualBill individualBill) {
-		this.individualBills.add(individualBill);
-	}
 
 
 	@Override

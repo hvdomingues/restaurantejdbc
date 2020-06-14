@@ -3,14 +3,12 @@ package com.hvdomingues.DinnerApp.entities.builder;
 import java.time.Instant;
 
 import com.hvdomingues.DinnerApp.entities.Bill;
-import com.hvdomingues.DinnerApp.entities.BillPayment;
 import com.hvdomingues.DinnerApp.entities.Category;
 import com.hvdomingues.DinnerApp.entities.IndividualBill;
 import com.hvdomingues.DinnerApp.entities.Order;
 import com.hvdomingues.DinnerApp.entities.OrderItem;
 import com.hvdomingues.DinnerApp.entities.Payment;
 import com.hvdomingues.DinnerApp.entities.Product;
-import com.hvdomingues.DinnerApp.services.BillPaymentServiceImpl;
 import com.hvdomingues.DinnerApp.services.BillServiceImpl;
 import com.hvdomingues.DinnerApp.services.CategoryServiceImpl;
 import com.hvdomingues.DinnerApp.services.IndividualBillServiceImpl;
@@ -21,25 +19,23 @@ import com.hvdomingues.DinnerApp.services.ProductServiceImpl;
 
 
 //Utilizado o site "https://refactoring.guru/pt-br/design-patterns/builder" para referências.
+//Como o BillPayment será criado automaticamente, não teremos um método aqui
 public class EntityBuilder {
 
 	private Bill bill;
 	private IndividualBill individualBill;
-	private BillPayment billPayment;
 	private Order order;
 	private OrderItem orderItem;
 	private Payment payment;
 	private Product product;
 	private Category category;
 
-	public Bill createBill(Integer id, Integer tableNumber, Integer statusBill) {
+	public Bill createBill(Integer tableNumber) {
 
 		// Instanciando o novo objeto
 		this.bill = new Bill();
 
 		// Settando valores do objeto
-		this.bill.setId(id);
-		this.bill.setStatusBill(statusBill);
 		this.bill.setTableNumber(tableNumber);
 		
 
@@ -56,13 +52,12 @@ public class EntityBuilder {
 
 	}
 
-	public IndividualBill createIndividualBill(Integer id, Bill bill, String observation, Integer tabPosition) {
+	public IndividualBill createIndividualBill(Bill bill, String observation, Integer tabPosition) {
 
 		// Instanciando o novo objeto
 		this.individualBill = new IndividualBill();
 
 		// Settando valores do objeto
-		this.individualBill.setId(id);
 		this.individualBill.setBill(bill);
 		this.individualBill.setObservation(observation);
 		this.individualBill.setTabPosition(tabPosition);
@@ -71,40 +66,20 @@ public class EntityBuilder {
 		IndividualBillServiceImpl individualBillService = new IndividualBillServiceImpl();
 
 		// Persistindo objeto no BD
-		this.individualBill = individualBillService.getRepo().saveOne(this.individualBill);
+		this.individualBill = individualBillService.saveOne(this.individualBill);
 
 		// Fechando conexão
-		individualBillService.getRepo().closeEM();
+		individualBillService.closeService();
 
 		return this.individualBill;
 	}
 
-	public BillPayment createBillPayment(Payment payment, IndividualBill individualBill) {
-		// Instanciando o novo objeto
-		this.billPayment = new BillPayment();
 
-		// Settando valores do objeto
-		this.billPayment.setIndBill(individualBill);
-		this.billPayment.setPayment(payment);
-
-		// Instanciando o serviço
-		BillPaymentServiceImpl billPaymentService = new BillPaymentServiceImpl();
-
-		// Persistindo objeto no BD
-		this.billPayment = billPaymentService.getRepo().saveOne(this.billPayment);
-
-		// Fechando conexão
-		billPaymentService.getRepo().closeEM();
-
-		return this.billPayment;
-	}
-
-	public Order createOrder(Integer id, Instant moment, IndividualBill individualBill) {
+	public Order createOrder(Instant moment, IndividualBill individualBill) {
 		// Instanciando o novo objeto
 		this.order = new Order();
 
 		// Settando valores do objeto
-		this.order.setId(id);
 		this.order.setIndBill(individualBill);
 		this.order.setMoment(moment);
 
@@ -112,20 +87,19 @@ public class EntityBuilder {
 		OrderServiceImpl orderService = new OrderServiceImpl();
 
 		// Persistindo objeto no BD
-		this.order = orderService.getRepo().saveOne(this.order);
+		this.order = orderService.saveOne(this.order);
 
 		// Fechando conexão
-		orderService.getRepo().closeEM();
+		orderService.closeService();
 
 		return this.order;
 	}
 
-	public OrderItem createOrderItem(Integer id, Integer quantity, Order order, Product product) {
+	public OrderItem createOrderItem(Integer quantity, Order order, Product product) {
 		// Instanciando o novo objeto
 		this.orderItem = new OrderItem();
 
 		// Settando valores do objeto
-		this.orderItem.setId(id);
 		this.orderItem.setOrder(order);
 		this.orderItem.setProduct(product);
 		this.orderItem.setQuantity(quantity);
@@ -135,20 +109,19 @@ public class EntityBuilder {
 		OrderItemServiceImpl orderItemService = new OrderItemServiceImpl();
 
 		// Persistindo objeto no BD
-		this.orderItem = orderItemService.getRepo().saveOne(this.orderItem);
+		this.orderItem = orderItemService.saveOne(this.orderItem);
 
 		// Fechando conexão
-		orderItemService.getRepo().closeEM();
+		orderItemService.closeService();
 
 		return this.orderItem;
 	}
 
-	public Payment createPayment(Integer id, Instant moment, Double paymentValue) {
+	public Payment createPayment(Instant moment, Double paymentValue) {
 		// Instanciando o novo objeto
 		this.payment = new Payment();
 
 		// Settando valores do objeto
-		this.payment.setId(id);
 		this.payment.setPayMoment(moment);
 		this.payment.setPayValue(paymentValue);
 
@@ -156,22 +129,21 @@ public class EntityBuilder {
 		PaymentServiceImpl paymentService = new PaymentServiceImpl();
 
 		// Persistindo objeto no BD
-		this.payment = paymentService.getRepo().saveOne(this.payment);
+		this.payment = paymentService.saveOne(this.payment);
 
 		// Fechando conexão
-		paymentService.getRepo().closeEM();
+		paymentService.closeService();
 
 		return this.payment;
 	}
 
-	public Product createProduct(Integer id, String productName, Double price, String desc, Category category) {
+	public Product createProduct(String productName, Double price, String desc, Category category) {
 		// Instanciando o novo objeto
 		this.product = new Product();
 
 		// Settando valores do objeto
 		this.product.setCategory(category);
 		this.product.setDescription(desc);
-		this.product.setId(id);
 		this.product.setName(productName);
 		this.product.setPrice(price);
 
@@ -179,30 +151,29 @@ public class EntityBuilder {
 		ProductServiceImpl productService = new ProductServiceImpl();
 
 		// Persistindo objeto no BD
-		this.product = productService.getRepo().saveOne(this.product);
+		this.product = productService.saveOne(this.product);
 
 		// Fechando conexão
-		productService.getRepo().closeEM();
+		productService.closeService();
 
 		return this.product;
 	}
 
-	public Category createCategory(Integer id, String categoryName) {
+	public Category createCategory(String categoryName) {
 		// Instanciando o novo objeto
 		this.category = new Category();
 
 		// Settando valores do objeto
-		this.category.setId(id);
 		this.category.setName(categoryName);;
 
 		// Instanciando o serviço
 		CategoryServiceImpl categoryService = new CategoryServiceImpl();
 
 		// Persistindo objeto no BD
-		this.category = categoryService.getRepo().saveOne(this.category);
+		this.category = categoryService.saveOne(this.category);
 
 		// Fechando conexão
-		categoryService.getRepo().closeEM();
+		categoryService.closeService();
 
 		return this.category;
 	}
