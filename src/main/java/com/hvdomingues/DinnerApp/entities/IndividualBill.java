@@ -33,7 +33,7 @@ public class IndividualBill implements Serializable{
 	private Integer tabPosition;
 	
 	@ManyToOne
-	@JoinColumn(name = "BillID")
+	@JoinColumn(name = "BillID", nullable = false)
 	private Bill bill;
 	
 	@OneToMany(mappedBy = "indBill")
@@ -48,12 +48,15 @@ public class IndividualBill implements Serializable{
 	@Column(name = "TipPaid")
 	private Double tipPaid;
 	
-	public IndividualBill() {}
+	public IndividualBill() {
+		this.statusBill = 0;
+	}
 	
 	public IndividualBill(Bill bill, String observation, int tabPosition) {
 		this.bill = bill;
 		this.observation = observation;
 		this.tabPosition = tabPosition;
+		this.statusBill = 0;
 	}
 
 	public Integer getId() {

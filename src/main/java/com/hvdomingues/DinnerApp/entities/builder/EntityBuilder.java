@@ -9,17 +9,18 @@ import com.hvdomingues.DinnerApp.entities.Order;
 import com.hvdomingues.DinnerApp.entities.OrderItem;
 import com.hvdomingues.DinnerApp.entities.Payment;
 import com.hvdomingues.DinnerApp.entities.Product;
-import com.hvdomingues.DinnerApp.services.BillServiceImpl;
-import com.hvdomingues.DinnerApp.services.CategoryServiceImpl;
-import com.hvdomingues.DinnerApp.services.IndividualBillServiceImpl;
-import com.hvdomingues.DinnerApp.services.OrderItemServiceImpl;
-import com.hvdomingues.DinnerApp.services.OrderServiceImpl;
-import com.hvdomingues.DinnerApp.services.PaymentServiceImpl;
-import com.hvdomingues.DinnerApp.services.ProductServiceImpl;
-
+import com.hvdomingues.DinnerApp.entities.exceptions.MyException;
+import com.hvdomingues.DinnerApp.services.factories.ServiceFactory;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillPaymentService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.ICategoryService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IIndividualBillService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IOrderItemService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IOrderService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IPaymentService;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IProductService;
 
 //Utilizado o site "https://refactoring.guru/pt-br/design-patterns/builder" para referências.
-//Como o BillPayment será criado automaticamente, não teremos um método aqui
 public class EntityBuilder {
 
 	private Bill bill;
@@ -29,6 +30,7 @@ public class EntityBuilder {
 	private Payment payment;
 	private Product product;
 	private Category category;
+	private ServiceFactory serviceFactory = new ServiceFactory();
 
 	public Bill createBill(Integer tableNumber) {
 
@@ -37,16 +39,16 @@ public class EntityBuilder {
 
 		// Settando valores do objeto
 		this.bill.setTableNumber(tableNumber);
-		
 
 		// Instanciando o serviço
-		BillServiceImpl billService = new BillServiceImpl();
+		IBillService billService = serviceFactory.createBillService();
 
 		// Persistindo objeto no BD
 		this.bill = billService.saveOne(this.bill);
 
 		// Fechando conexão
-		billService.closeService();;
+		billService.closeService();
+		;
 
 		return this.bill;
 
@@ -63,7 +65,7 @@ public class EntityBuilder {
 		this.individualBill.setTabPosition(tabPosition);
 
 		// Instanciando o serviço
-		IndividualBillServiceImpl individualBillService = new IndividualBillServiceImpl();
+		IIndividualBillService individualBillService = serviceFactory.createIndBillService();
 
 		// Persistindo objeto no BD
 		this.individualBill = individualBillService.saveOne(this.individualBill);
@@ -74,7 +76,6 @@ public class EntityBuilder {
 		return this.individualBill;
 	}
 
-
 	public Order createOrder(Instant moment, IndividualBill individualBill) {
 		// Instanciando o novo objeto
 		this.order = new Order();
@@ -84,7 +85,7 @@ public class EntityBuilder {
 		this.order.setMoment(moment);
 
 		// Instanciando o serviço
-		OrderServiceImpl orderService = new OrderServiceImpl();
+		IOrderService orderService = serviceFactory.createOrderService();
 
 		// Persistindo objeto no BD
 		this.order = orderService.saveOne(this.order);
@@ -106,7 +107,7 @@ public class EntityBuilder {
 		this.orderItem.setItemPrice();
 
 		// Instanciando o serviço
-		OrderItemServiceImpl orderItemService = new OrderItemServiceImpl();
+		IOrderItemService orderItemService = serviceFactory.createOrderItemService();
 
 		// Persistindo objeto no BD
 		this.orderItem = orderItemService.saveOne(this.orderItem);
@@ -117,22 +118,35 @@ public class EntityBuilder {
 		return this.orderItem;
 	}
 
-	public Payment createPayment(Instant moment, Double paymentValue) {
+	public Payment createPayment(Double paymentValue, IndividualBill indBill) {
 		// Instanciando o novo objeto
 		this.payment = new Payment();
 
 		// Settando valores do objeto
-		this.payment.setPayMoment(moment);
+		this.payment.setPayMoment(Instant.now());
 		this.payment.setPayValue(paymentValue);
 
 		// Instanciando o serviço
-		PaymentServiceImpl paymentService = new PaymentServiceImpl();
+		IPaymentService paymentService = serviceFactory.createPaymentService();
+		IBillPaymentService billPaymentService = serviceFactory.createBillPaymentService();
 
 		// Persistindo objeto no BD
-		this.payment = paymentService.saveOne(this.payment);
-
-		// Fechando conexão
-		paymentService.closeService();
+		try {
+			if (this.individualBill == null) {
+				this.payment = null;
+				throw new MyException("Um pagamento deve ter ao menos uma conta individual associada a ele");
+			} else {
+				this.payment = paymentService.saveOne(this.payment);
+				billPaymentService.saveOne(payment, indBill);
+			}
+		} catch (MyException e) {
+			System.out.println(e.getMessage());
+			return this.payment;
+		} finally {
+			// Fechando conexão
+			paymentService.closeService();
+			billPaymentService.closeService();
+		}
 
 		return this.payment;
 	}
@@ -148,7 +162,7 @@ public class EntityBuilder {
 		this.product.setPrice(price);
 
 		// Instanciando o serviço
-		ProductServiceImpl productService = new ProductServiceImpl();
+		IProductService productService = serviceFactory.createProductService();
 
 		// Persistindo objeto no BD
 		this.product = productService.saveOne(this.product);
@@ -164,10 +178,10 @@ public class EntityBuilder {
 		this.category = new Category();
 
 		// Settando valores do objeto
-		this.category.setName(categoryName);;
+		this.category.setName(categoryName);
 
 		// Instanciando o serviço
-		CategoryServiceImpl categoryService = new CategoryServiceImpl();
+		ICategoryService categoryService = serviceFactory.createCategoryService();
 
 		// Persistindo objeto no BD
 		this.category = categoryService.saveOne(this.category);

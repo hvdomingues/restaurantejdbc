@@ -1,24 +1,24 @@
 package com.hvdomingues.DinnerApp.application;
 
+import com.hvdomingues.DinnerApp.entities.Bill;
+import com.hvdomingues.DinnerApp.entities.IndividualBill;
 import com.hvdomingues.DinnerApp.entities.builder.EntityBuilder;
 import com.hvdomingues.DinnerApp.services.factories.ServiceFactory;
-import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
 
 
 public class TestApp {
 	public static void main(String[] args) {
 
 		
-		ServiceFactory serviceFactory = new ServiceFactory();
 		EntityBuilder entityBuilder = new EntityBuilder();
+		ServiceFactory serviceFactory = new ServiceFactory();
+						
 		
-		IBillService billService = serviceFactory.createBillService();
-				
-		billService.closeBill(billService.getByID(25));
+		Bill bill1 = serviceFactory.createBillService().getByID(1);
+		IndividualBill indBill1 = entityBuilder.createIndividualBill(bill1, "Paulo", 2);
+		System.out.println(entityBuilder.createPayment(69.90, indBill1));
 		
-		entityBuilder.createBill(9);
 		
-		billService.closeService();
 	
 
 	}
