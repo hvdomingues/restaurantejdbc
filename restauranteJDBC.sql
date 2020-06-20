@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `restaurantejdbc` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `restaurantejdbc` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `restaurantejdbc`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
@@ -23,7 +23,7 @@ USE `restaurantejdbc`;
 
 DROP TABLE IF EXISTS `billpayment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8*/;
 CREATE TABLE `billpayment` (
   `PaymentID` int unsigned NOT NULL,
   `IndividualBillID` int NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `billpayment` (
   KEY `IndividualBillID` (`IndividualBillID`),
   CONSTRAINT `billpayment_ibfk_1` FOREIGN KEY (`PaymentID`) REFERENCES `payments` (`PaymentID`),
   CONSTRAINT `billpayment_ibfk_2` FOREIGN KEY (`IndividualBillID`) REFERENCES `individualbills` (`IndividualBillID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,13 +50,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `bills`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `bills` (
   `BillID` int NOT NULL AUTO_INCREMENT,
   `TableNumber` int DEFAULT NULL,
   `StatusBill` int DEFAULT NULL,
   PRIMARY KEY (`BillID`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8	COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,12 +75,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
   `CategoryID` int NOT NULL AUTO_INCREMENT,
   `CategoryName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`CategoryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `individualbills`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `individualbills` (
   `IndividualBillID` int NOT NULL AUTO_INCREMENT,
   `BillID` int DEFAULT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE `individualbills` (
   PRIMARY KEY (`IndividualBillID`),
   KEY `individualbills_ibfk_1` (`BillID`),
   CONSTRAINT `individualbills_ibfk_1` FOREIGN KEY (`BillID`) REFERENCES `bills` (`BillID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `orderitem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `orderitem` (
   `OrderItemID` int NOT NULL AUTO_INCREMENT,
   `Quantity` int DEFAULT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE `orderitem` (
   KEY `ProductID` (`ProductID`),
   CONSTRAINT `orderitem_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`),
   CONSTRAINT `orderitem_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +161,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `orders` (
   `OrderID` int NOT NULL AUTO_INCREMENT,
   `Moment` timestamp NULL DEFAULT NULL,
@@ -169,7 +169,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`OrderID`),
   KEY `IndividualBillID` (`IndividualBillID`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`IndividualBillID`) REFERENCES `individualbills` (`IndividualBillID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_as_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,13 +188,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `payments` (
   `PaymentID` int unsigned NOT NULL AUTO_INCREMENT,
   `PaymentMoment` timestamp NULL DEFAULT NULL,
   `PaymentValue` double NOT NULL,
   PRIMARY KEY (`PaymentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
   `ProductID` int NOT NULL AUTO_INCREMENT,
   `ProductName` varchar(50) DEFAULT NULL,
@@ -223,7 +223,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`ProductID`),
   KEY `CategoryID` (`CategoryID`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,12 +242,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `waiters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `waiters` (
   `WaiterID` int NOT NULL AUTO_INCREMENT,
   `WaiterName` varchar(55) DEFAULT NULL,
   PRIMARY KEY (`WaiterID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
