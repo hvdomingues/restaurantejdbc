@@ -15,17 +15,13 @@
         <class>com.hvdomingues.DinnerApp.entities.IndividualBill</class>
         <class>com.hvdomingues.DinnerApp.entities.Payment</class>
         <class>com.hvdomingues.DinnerApp.entities.BillPayment</class>
-        <class>com.hvdomingues.DinnerApp.entities.Order</class>
-        <class>com.hvdomingues.DinnerApp.entities.OrderItem</class>
-        <class>com.hvdomingues.DinnerApp.entities.Product</class>
-        <class>com.hvdomingues.DinnerApp.entities.Category</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" 
             	value="com.mysql.cj.jdbc.Driver" />
             <!-- URL for DB -->
             <property name="javax.persistence.jdbc.url" 
-            	value="jdbc:mysql://localhost/restaurantejdbc?useTimezone=true&amp;serverTimezone=UTC" />
+            	value="jdbc:mysql://localhost/restaurantejdbc" />
             <!-- Username -->
             <property name="javax.persistence.jdbc.user" 
             	value="dbadmin" />
