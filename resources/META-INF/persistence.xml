@@ -21,7 +21,7 @@
             	value="com.mysql.cj.jdbc.Driver" />
             <!-- URL for DB -->
             <property name="javax.persistence.jdbc.url" 
-            	value="jdbc:mysql://localhost/restaurantejdbc" />
+            	value="jdbc:mysql://localhost/restaurantejdbc?useTimezone=true&amp;serverTimezone=UTC" />
             <!-- Username -->
             <property name="javax.persistence.jdbc.user" 
             	value="dbadmin" />
