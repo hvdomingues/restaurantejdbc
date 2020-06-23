@@ -11,42 +11,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hvdomingues.DinnerApp.entities.Bill;
-import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
+import com.hvdomingues.DinnerApp.entities.IndividualBill;
+import com.hvdomingues.DinnerApp.services.servicesInterfaces.IIndividualBillService;
 
 @RestController
-@RequestMapping(value = "/bills")
-public class BillResource {
+@RequestMapping(value = "/individualbills")
+public class IndividualBillResource {
 
 	@Autowired
-	private IBillService service;
+	private IIndividualBillService service;
 
 	@GetMapping
-	public ResponseEntity<List<Bill>> findAll() {
-		List<Bill> list = service.getAll();
+	public ResponseEntity<List<IndividualBill>> findAll() {
+		List<IndividualBill> list = service.getAll();
 
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Bill> findById(@PathVariable Integer id) {
-		Bill obj = service.getByID(id);
+	public ResponseEntity<IndividualBill> findById(@PathVariable Integer id) {
+		IndividualBill obj = service.getByID(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	/*
-	 * @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	 * public Bill saveBill(@RequestBody Bill request) {
-	 * 
-	 * 
-	 * return service.saveOne(request); }
-	 */
-	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<Bill> addBill(@RequestBody Integer tableNumber) {
+	public IndividualBill saveIndividualBill(@RequestBody IndividualBill request) {
 		
-		Bill obj = service.saveOne(new Bill(tableNumber));
-		return ResponseEntity.ok().body(obj);
+		
+		return service.saveOne(request);
 	}
 
 }
