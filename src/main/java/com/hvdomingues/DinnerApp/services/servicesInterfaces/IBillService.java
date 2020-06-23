@@ -3,7 +3,6 @@ package com.hvdomingues.DinnerApp.services.servicesInterfaces;
 import java.util.List;
 
 import com.hvdomingues.DinnerApp.entities.Bill;
-import com.hvdomingues.DinnerApp.services.exceptions.MyException2;
 
 public interface IBillService {
 
@@ -17,5 +16,5 @@ public interface IBillService {
 	
 	List<Bill> saveAll(List<Bill> toSave);
 	
-	Bill saveOne(Bill toSave) throws MyException2;
+	Bill saveOne(Bill toSave);
 }

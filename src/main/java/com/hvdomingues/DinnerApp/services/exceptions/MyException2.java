@@ -1,6 +1,5 @@
 package com.hvdomingues.DinnerApp.services.exceptions;
 
-//Descobrir como organizar as exceções.
 public class MyException2 extends RuntimeException{
 	private static final long serialVersionUID = 1302158997535306808L;
 

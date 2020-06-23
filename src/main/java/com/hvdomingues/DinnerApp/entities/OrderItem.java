@@ -24,8 +24,9 @@ public class OrderItem implements Serializable{
 	@Column(name = "OrderItemID")
 	private Integer id;
 	
-	@Column(name = "Quantity")
-	private Integer quantity;
+	
+	@Column(name = "Observation")
+	private String observation;
 	
 	@Column(name = "ItemPrice")
 	private Double itemPrice;
@@ -43,12 +44,11 @@ public class OrderItem implements Serializable{
 	public OrderItem() {	
 	}
 	
-	public OrderItem(Integer id, Integer quantity, Order order, Product product) {
-		this.id = id;
-		this.quantity = quantity;
+	public OrderItem(Order order, Product product, String observation) {
 		this.order = order;
 		this.product = product;
 		this.itemPrice = product.getPrice();
+		this.observation = observation;
 	}
 
 	public Integer getId() {
@@ -59,12 +59,14 @@ public class OrderItem implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	
+
+	public String getObservation() {
+		return observation;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setObservation(String observation) {
+		this.observation = observation;
 	}
 
 	public Double getItemPrice() {
@@ -91,9 +93,6 @@ public class OrderItem implements Serializable{
 		this.product = product;
 	}
 	
-	public Double totalPrice() {
-		return itemPrice * quantity;
-	}
 
 	@Override
 	public int hashCode() {
@@ -122,7 +121,7 @@ public class OrderItem implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", quantity=" + quantity + ", itemPrice=" + itemPrice + ", order=" + order
+		return "OrderItem [id=" + id + ", observation=" + observation + ", itemPrice=" + itemPrice + ", order=" + order
 				+ ", product=" + product + "]";
 	}
 	

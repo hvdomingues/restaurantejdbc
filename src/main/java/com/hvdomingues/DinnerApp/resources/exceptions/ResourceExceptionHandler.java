@@ -27,7 +27,7 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(DatabaseException.class)
 	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
-		String error = "Database error/n" + e.getMessage();
+		String error = "Database error/";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
@@ -35,7 +35,7 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(MyException2.class)
 	public ResponseEntity<StandardError> myException(MyException2 e, HttpServletRequest request){
-		String error = "Error/n" + e.getMessage();
+		String error = "Error";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.hvdomingues.DinnerApp.entities.Bill;
 import com.hvdomingues.DinnerApp.entities.IndividualBill;
-import com.hvdomingues.DinnerApp.entities.exceptions.MyException;
 import com.hvdomingues.DinnerApp.repositories.IBillRepository;
 import com.hvdomingues.DinnerApp.services.exceptions.MyException2;
 import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
@@ -23,23 +22,14 @@ public class BillServiceImpl implements IBillService {
 	public Bill changeTabNumber(Bill bill, Integer newTabNumber) {
 
 		List<Bill> bills = billRepo.findAll();
-		try {
-			for (Bill x : bills) {
-				if (x.getStatusBill() == 0 && x.getTableNumber() == newTabNumber) {
-					// Teste de Exception personalizada
-					throw new MyException("Table already occupied by an active bill. Bill id: " + x.getId() + ".");
-				}
+		for (Bill x : bills) {
+			if (x.getStatusBill() == 0 && x.getTableNumber() == newTabNumber) {
+				throw new MyException2("Table already occupied by an active bill. Bill id: " + x.getId() + ".");
 			}
-
-			bill.setTableNumber(newTabNumber);
-			bill = billRepo.save(bill);
-
 		}
 
-		catch (MyException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+		bill.setTableNumber(newTabNumber);
+		bill = billRepo.save(bill);
 
 		return bill;
 
@@ -47,34 +37,28 @@ public class BillServiceImpl implements IBillService {
 
 	@Override
 	public Bill closeBill(Bill bill) {
-		try {
 
-			if (bill.getStatusBill() == 1) {
-				throw new MyException("A conta já está fechada.");
-			}
-
-			if (bill.getIndividualBills() != null) {
-				List<IndividualBill> indBills = bill.getIndividualBills();
-				List<IndividualBill> openedIndBills = new ArrayList<>();
-
-				for (IndividualBill indBill : indBills) {
-					if (indBill.getStatusBill() == 0) {
-						openedIndBills.add(indBill);
-					}
-				}
-
-				if (openedIndBills.size() >= 1) {
-					throw new MyException("Ainda há contas individuais abertas. Contas:\n" + openedIndBills);
-				}
-				bill.setStatusBill(1);
-				billRepo.save(bill);
-
-			}
-		} catch (MyException e) {
-			System.out.println(e.getMessage());
-			return null;
+		if (bill.getStatusBill() == 1) {
+			throw new MyException2("A conta já está fechada.");
 		}
 
+		if (bill.getIndividualBills() != null) {
+			List<IndividualBill> indBills = bill.getIndividualBills();
+			List<IndividualBill> openedIndBills = new ArrayList<>();
+
+			for (IndividualBill indBill : indBills) {
+				if (indBill.getStatusBill() == 0) {
+					openedIndBills.add(indBill);
+				}
+			}
+
+			if (openedIndBills.size() >= 1) {
+				throw new MyException2("Ainda há contas individuais abertas. Contas:\n" + openedIndBills);
+			}
+			bill.setStatusBill(1);
+			billRepo.save(bill);
+
+		}
 		return bill;
 	}
 
@@ -94,7 +78,7 @@ public class BillServiceImpl implements IBillService {
 	}
 
 	@Override
-	public Bill saveOne(Bill toSave) throws MyException2 {
+	public Bill saveOne(Bill toSave) {
 
 		List<Bill> bills = getAll();
 

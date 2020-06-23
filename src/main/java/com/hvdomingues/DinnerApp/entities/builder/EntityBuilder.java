@@ -86,14 +86,14 @@ public class EntityBuilder {
 		return this.order;
 	}
 
-	public OrderItem createOrderItem(Integer quantity, Order order, Product product) {
+	public OrderItem createOrderItem(Integer quantity, String observation, Order order, Product product) {
 		// Instanciando o novo objeto
 		this.orderItem = new OrderItem();
 
 		// Settando valores do objeto
 		this.orderItem.setOrder(order);
 		this.orderItem.setProduct(product);
-		this.orderItem.setQuantity(quantity);
+		this.orderItem.setObservation(observation);
 		this.orderItem.setItemPrice();
 
 		// Instanciando o serviço
