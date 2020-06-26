@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,13 +22,31 @@ public class BillResource {
 	@Autowired
 	private IBillService service;
 
+	@CrossOrigin
 	@GetMapping
 	public ResponseEntity<List<Bill>> findAll() {
 		List<Bill> list = service.getAll();
 
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@CrossOrigin
+	@GetMapping(value = "/inactive")
+	public ResponseEntity<List<Bill>> findAllInactive() {
+		List<Bill> list = service.getInactiveBills();
 
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@CrossOrigin
+	@GetMapping(value = "/active")
+	public ResponseEntity<List<Bill>> findAllActive() {
+		List<Bill> list = service.getActiveBills();
+
+		return ResponseEntity.ok().body(list);
+	}
+
+	@CrossOrigin
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Bill> findById(@PathVariable Integer id) {
 		Bill obj = service.getByID(id);
@@ -42,6 +61,7 @@ public class BillResource {
 	 * return service.saveOne(request); }
 	 */
 	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Bill> addBill(@RequestBody Integer tableNumber) {
 		

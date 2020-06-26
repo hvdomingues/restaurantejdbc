@@ -14,7 +14,16 @@ public interface IBillService {
 
 	List<Bill> getAll();
 	
+	List<Bill> getInactiveBills();
+	
+	List<Bill> getActiveBills();
+	
 	List<Bill> saveAll(List<Bill> toSave);
 	
+	
 	Bill saveOne(Bill toSave);
+
+	
+	
+	
 }

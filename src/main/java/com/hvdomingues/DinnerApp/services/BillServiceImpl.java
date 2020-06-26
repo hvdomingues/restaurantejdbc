@@ -1,6 +1,7 @@
 package com.hvdomingues.DinnerApp.services;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +67,23 @@ public class BillServiceImpl implements IBillService {
 	public Bill getByID(Integer id) {
 		return billRepo.findById(id).get();
 	}
-
+	
 	@Override
 	public List<Bill> getAll() {
 		return billRepo.findAll();
+	}
+
+	@Override
+	public List<Bill> getInactiveBills() {
+		return billRepo.findByStatusBill(1);
+		
+	}
+	
+	@Override
+	public List<Bill> getActiveBills() {
+		List<Bill> results = billRepo.findByStatusBill(0);
+		results.sort(Comparator.comparing(Bill::getTableNumber));
+		return results;
 	}
 
 	@Override
@@ -92,5 +106,6 @@ public class BillServiceImpl implements IBillService {
 
 		return billRepo.save(toSave);
 	}
+
 
 }
