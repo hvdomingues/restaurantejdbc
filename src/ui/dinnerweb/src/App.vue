@@ -4,14 +4,7 @@
       <img class="img-responsive" alt="Vue logo" src="./assets/restaurante.png" >
       <HelloWorld msg="Restaurante"/>
     </div>
-    <div id="div2">
-      <HelloWorld msg="Sua mãe"/>
-      <Bill/>
-    </div>
-    <div class="row mx-md-n5">
-      <div class="col py-3 px-md-5 border bg-light">Custom column padding</div>
-      <div class="col py-3 px-md-5 border bg-light">Custom column padding</div>
-    </div>
+    <Bill/>
   </div>
 </template>
 

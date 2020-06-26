@@ -1,19 +1,24 @@
 <template>
   <div>
     <button v-on:click="getBills()">Atualizar</button>
-    <button v-on:click="changeBillType()">Change</button>
+    <button v-on:click="changeBillType()">Ver contas {{tipoConta}}</button>
     <section v-if="errored">
       <p>Pedimos desculpas, não estamos conseguindo recuperar as informações no momento. Por favor, tente novamente mais tarde.</p>
     </section>
 
     <section v-else>
       <div v-if="loading">Carregando...</div>
-      <div v-for="bill in bills" :key="bill.id">
-        <span>
-          Bill ID:
-          <strong>{{ bill.id }}</strong>
-          TableNumber: {{bill.tableNumber}}
-        </span>
+      <div class="row" >
+        <div class="col-sm-3" v-for="bill in bills" :key="bill.id">
+          <div class="card">
+            <div class="card-body">
+              <!-- Se for conta ativa mostra pelo número da mesa, caso seja conta inativa mostra pelo ID da conta -->
+              <h5 class="card-title" v-if="tipoConta==='inativas'"><img src="https://i.ibb.co/H7yZBxw/table.png" width="20" height="20">{{ bill.tableNumber }}</h5>
+              <h5 class="card-title" v-if="tipoConta==='ativas'"><img src="https://i.ibb.co/H7yZBxw/table.png" width="20" height="20">{{ bill.id }}</h5>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -32,7 +37,8 @@ export default {
       bills: null,
       loading: true,
       errored: false,
-      billType: "/active"
+      billType: "/active",
+      tipoConta: "inativas"
     };
   },
   created() {
@@ -52,12 +58,13 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
-    changeBillType(){
-      if(this.billType === "/active"){
+    changeBillType() {
+      if (this.billType === "/active") {
         this.billType = "/inactive";
-      }
-      else if(this.billType === "/inactive"){
+        this.tipoConta = "ativas"
+      } else if (this.billType === "/inactive") {
         this.billType = "/active";
+        this.tipoConta = "inativas"
       }
       this.getBills();
     }
