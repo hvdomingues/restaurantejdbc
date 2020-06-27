@@ -13,8 +13,8 @@
           <div class="card">
             <div class="card-body">
               <!-- Se for conta ativa mostra pelo número da mesa, caso seja conta inativa mostra pelo ID da conta -->
-              <h5 class="card-title" v-if="tipoConta==='inativas'"><img src="https://i.ibb.co/H7yZBxw/table.png" width="20" height="20">{{ bill.tableNumber }}</h5>
-              <h5 class="card-title" v-if="tipoConta==='ativas'"><img src="https://i.ibb.co/H7yZBxw/table.png" width="20" height="20">{{ bill.id }}</h5>
+              <h5 class="card-title" v-if="tipoConta==='inativas'"><img src="../assets/table.png" width="20" height="20">{{ bill.tableNumber }}</h5>
+              <h5 class="card-title" v-if="tipoConta==='ativas'"><img src="../assets/table.png" width="20" height="20">{{ bill.id }}</h5>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
@@ -27,6 +27,7 @@
 
 <script>
 import axios from "axios";
+
 
 var dataURL = "http://localhost:8080/bills";
 
