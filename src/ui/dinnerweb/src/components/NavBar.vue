@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">DinnerWeb</a>
+      <a class="navbar-brand" v-on:click="mudarPagina(0)" href="#">DinnerWeb</a>
       <button
         class="navbar-toggler"
         type="button"
