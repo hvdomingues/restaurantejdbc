@@ -1,7 +1,9 @@
 <template>
   <div>
-    <button v-on:click="getBills()">Atualizar</button>
-    <button v-on:click="changeBillType()">Ver contas {{tipoConta}}</button>
+    <div class="btn-group" role="group" style="margin: 30px" aria-label="Exemplo básico">
+    <button type="button" class="btn btn-outline-secondary" v-on:click="getBills()">Atualizar</button>
+    <button type="button" class="btn btn-outline-secondary" v-on:click="changeBillType()">Ver contas {{tipoConta}}</button>
+    </div>
     <section v-if="errored">
       <p>Pedimos desculpas, não estamos conseguindo recuperar as informações no momento. Por favor, tente novamente mais tarde.</p>
     </section>
@@ -13,8 +15,8 @@
           <div class="card">
             <div class="card-body">
               <!-- Se for conta ativa mostra pelo número da mesa, caso seja conta inativa mostra pelo ID da conta -->
-              <h5 class="card-title" v-if="tipoConta==='inativas'"><img src="../assets/table.png" width="20" height="20">{{ bill.tableNumber }}</h5>
-              <h5 class="card-title" v-if="tipoConta==='ativas'"><img src="../assets/table.png" width="20" height="20">{{ bill.id }}</h5>
+              <h5 class="card-title" v-if="tipoConta==='inativas'"><img src="../assets/table.png" class="icone" width="20" height="25">Mesa: {{ bill.tableNumber }}</h5>
+              <h5 class="card-title" v-if="tipoConta==='ativas'"><img src="../assets/table.png" class="icone" width="20" height="25">Conta: {{ bill.id }}</h5>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
@@ -72,3 +74,10 @@ export default {
   }
 };
 </script>
+
+<style>
+  .icone{
+    margin-right: 5px;
+    margin-bottom: 2px;
+  }
+</style>

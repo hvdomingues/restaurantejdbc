@@ -24,7 +24,7 @@
             <a class="nav-link" v-on:click="mudarPagina(1)" href="#">Bills</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" v-on:click="mudarPagina(2)" href="#">Relatórios</a>
           </li>
         </ul>
         <span class="navbar-text">
