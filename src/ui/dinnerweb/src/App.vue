@@ -7,6 +7,7 @@
       <PaginaPrincipal v-if="pagina === 0" />
       <Bill v-if="pagina === 1" />
       <Relatorios v-if="pagina === 2" />
+
     </div>
   </div>
 </template>

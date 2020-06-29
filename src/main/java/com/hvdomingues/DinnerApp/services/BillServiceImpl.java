@@ -22,9 +22,9 @@ public class BillServiceImpl implements IBillService {
 	@Override
 	public Bill changeTabNumber(Bill bill, Integer newTabNumber) {
 
-		List<Bill> bills = billRepo.findAll();
+		List<Bill> bills = getActiveBills();
 		for (Bill x : bills) {
-			if (x.getStatusBill() == 0 && x.getTableNumber() == newTabNumber) {
+			if (x.getTableNumber() == newTabNumber) {
 				throw new MyException2("Table already occupied by an active bill. Bill id: " + x.getId() + ".");
 			}
 		}
@@ -94,10 +94,10 @@ public class BillServiceImpl implements IBillService {
 	@Override
 	public Bill saveOne(Bill toSave) {
 
-		List<Bill> bills = getAll();
+		List<Bill> bills = getActiveBills();
 
 		for (Bill x : bills) {
-			if (x.getStatusBill() == 0 && x.getTableNumber() == toSave.getTableNumber()) {
+			if (x.getTableNumber() == toSave.getTableNumber()) {
 
 				throw new MyException2("Table already occupied by an active bill. Bill id: " + x.getId() + ".");
 
