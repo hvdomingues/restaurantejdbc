@@ -33,7 +33,7 @@
                 <img src="../assets/table.png" class="icone" width="20" height="25" />
                 Conta: {{ bill.id }}
               </h5>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
         </div>
@@ -50,7 +50,6 @@
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
-          <form>
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Digite o número da mesa:</h5>
@@ -59,15 +58,15 @@
               </button>
             </div>
             <div class="modal-body">
-              <input type="number" placeholder="Número da mesa" v-model="numeroMesa">
+              <input type="number" min="1" placeholder="Número da mesa" v-model="numeroMesa" />
+              <h6 v-if="errorMessage != null" style="margin: 10px">{{errorMessage}}</h6>
+              <h6 v-if="sucess" style="margin: 10px">Conta criada com sucesso.</h6>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" v-on:click="createBill()" class="btn btn-primary">Save changes</button>
             </div>
           </div>
-          </form>
-        
       </div>
     </div>
   </div>
@@ -85,7 +84,9 @@ export default {
       loading: true,
       errored: false,
       billType: true,
-      numeroMesa: null
+      numeroMesa: null,
+      errorMessage: null,
+      sucess: false
     };
   },
   created() {
@@ -125,14 +126,18 @@ export default {
       this.getBills();
     },
     createBill() {
-      BillService.create(this.numeroMesa).then(response =>{
-        console.log(response.data);
-         this.numeroMesa = null;
-      }).catch(error => {
-            console.log(error);
-          })
-          
-     
+      BillService.create(this.numeroMesa)
+        .then(response => {
+          console.log(response.data);
+          this.numeroMesa = null;
+          this.errorMessage = null;
+          this.sucess = true;
+          this.getBills();
+        })
+        .catch(error => {
+          this.errorMessage = error.response.data.message;
+          this.numeroMesa = null;
+        });
     }
   }
 };

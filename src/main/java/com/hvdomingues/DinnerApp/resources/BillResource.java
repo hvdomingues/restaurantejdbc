@@ -3,6 +3,7 @@ package com.hvdomingues.DinnerApp.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +18,12 @@ import com.hvdomingues.DinnerApp.services.servicesInterfaces.IBillService;
 
 @RestController
 @RequestMapping(value = "/bills")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BillResource {
 
 	@Autowired
 	private IBillService service;
 
-	@CrossOrigin
 	@GetMapping
 	public ResponseEntity<List<Bill>> findAll() {
 		List<Bill> list = service.getAll();
@@ -30,7 +31,6 @@ public class BillResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@CrossOrigin
 	@GetMapping(value = "/inactive")
 	public ResponseEntity<List<Bill>> findAllInactive() {
 		List<Bill> list = service.getInactiveBills();
@@ -38,7 +38,6 @@ public class BillResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@CrossOrigin
 	@GetMapping(value = "/active")
 	public ResponseEntity<List<Bill>> findAllActive() {
 		List<Bill> list = service.getActiveBills();
@@ -46,7 +45,6 @@ public class BillResource {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@CrossOrigin
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Bill> findById(@PathVariable Integer id) {
 		Bill obj = service.getByID(id);
@@ -61,7 +59,6 @@ public class BillResource {
 	 * return service.saveOne(request); }
 	 */
 	
-	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Bill> addBill(@RequestBody Integer tableNumber) {
 		
@@ -69,4 +66,15 @@ public class BillResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@RequestMapping(value = "/addBill", method = RequestMethod.POST,
+	        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
+	        produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Bill> addBill2(
+	Integer tableNumber){
+		
+		Bill obj = service.saveOne(new Bill(tableNumber));
+		return ResponseEntity.ok().body(obj);
+	   
+	}
+	
 }

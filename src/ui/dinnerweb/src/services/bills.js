@@ -16,7 +16,7 @@ export default {
     },
 
     create:(numeroMesa) => {
-        return http.post('bills', numeroMesa)
+        return http.post('bills/addBill', "tableNumber= " + numeroMesa)
     }
 
 }

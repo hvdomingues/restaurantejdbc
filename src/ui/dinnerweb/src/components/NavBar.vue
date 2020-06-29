@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" v-on:click="mudarPagina(0)" href="#">DinnerWeb</a>
+      <a class="navbar-brand" v-on:click="mudarPagina(0)">DinnerWeb</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -16,15 +16,15 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" v-on:click="mudarPagina(0)" href="#">
+            <a class="nav-link" v-on:click="mudarPagina(0)">
               Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" v-on:click="mudarPagina(1)" href="#">Bills</a>
+            <a class="nav-link" v-on:click="mudarPagina(1)">Bills</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" v-on:click="mudarPagina(2)" href="#">Relatórios</a>
+            <a class="nav-link" v-on:click="mudarPagina(2)">Relatórios</a>
           </li>
         </ul>
         <span class="navbar-text">
@@ -49,3 +49,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.nav-link{
+  cursor: pointer
+}
+
+</style>
