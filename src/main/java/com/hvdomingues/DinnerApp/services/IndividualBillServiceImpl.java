@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hvdomingues.DinnerApp.entities.Bill;
 import com.hvdomingues.DinnerApp.entities.IndividualBill;
 import com.hvdomingues.DinnerApp.repositories.IIndividualBillRepository;
 import com.hvdomingues.DinnerApp.services.exceptions.MyException2;
@@ -15,6 +16,7 @@ public class IndividualBillServiceImpl implements IIndividualBillService {
 
 	@Autowired
 	private IIndividualBillRepository indBillRepo;
+	
 
 	@Override
 	public IndividualBill saveOne(IndividualBill toSave) {
@@ -38,8 +40,10 @@ public class IndividualBillServiceImpl implements IIndividualBillService {
 	}
 
 	@Override
-	public List<IndividualBill> getAll() {
-		return indBillRepo.findAll();
+	public List<IndividualBill> getAll(Integer billid) {
+		Bill bill = new Bill();
+		bill.setId(billid);
+		return indBillRepo.findByBill(bill);
 	}
 
 	@Override

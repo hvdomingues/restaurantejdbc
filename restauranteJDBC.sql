@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `billpayment` (
   `PaymentID` int(10) UNSIGNED NOT NULL,
-  `IndividualBillID` int(11) NOT NULL
+  `IndividualBillID` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -54,9 +54,9 @@ INSERT INTO `billpayment` (`PaymentID`, `IndividualBillID`) VALUES
 --
 
 CREATE TABLE `bills` (
-  `BillID` int(11) NOT NULL,
-  `TableNumber` int(11) DEFAULT NULL,
-  `StatusBill` int(11) DEFAULT NULL
+  `BillID` int(11) UNSIGNED NOT NULL,
+  `TableNumber` int(11) UNSIGNED DEFAULT NULL,
+  `StatusBill` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -96,7 +96,7 @@ INSERT INTO `bills` (`BillID`, `TableNumber`, `StatusBill`) VALUES
 --
 
 CREATE TABLE `categories` (
-  `CategoryID` int(11) NOT NULL,
+  `CategoryID` int(11) UNSIGNED NOT NULL,
   `CategoryName` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -116,11 +116,11 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`) VALUES
 --
 
 CREATE TABLE `individualbills` (
-  `IndividualBillID` int(11) NOT NULL,
-  `BillID` int(11) DEFAULT NULL,
+  `IndividualBillID` int(11) UNSIGNED NOT NULL,
+  `BillID` int(11) UNSIGNED DEFAULT NULL,
   `Observation` varchar(255) DEFAULT NULL,
-  `TabPosition` int(11) NOT NULL,
-  `StatusBill` int(11) DEFAULT 0,
+  `TabPosition` int(11) UNSIGNED NOT NULL,
+  `StatusBill` int(11) UNSIGNED DEFAULT 0,
   `TotalPaid` double DEFAULT 0,
   `TipPaid` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -148,11 +148,11 @@ INSERT INTO `individualbills` (`IndividualBillID`, `BillID`, `Observation`, `Tab
 --
 
 CREATE TABLE `orderitem` (
-  `OrderItemID` int(11) NOT NULL,
+  `OrderItemID` int(11) UNSIGNED NOT NULL,
   `ItemPrice` double DEFAULT NULL,
   `Observation` varchar(255) DEFAULT NULL,
-  `OrderID` int(11) DEFAULT NULL,
-  `ProductID` int(11) DEFAULT NULL
+  `OrderID` int(11) UNSIGNED DEFAULT NULL,
+  `ProductID` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -173,9 +173,9 @@ INSERT INTO `orderitem` (`OrderItemID`, `ItemPrice`, `Observation`, `OrderID`, `
 --
 
 CREATE TABLE `orders` (
-  `OrderID` int(11) NOT NULL,
+  `OrderID` int(11) UNSIGNED NOT NULL,
   `Moment` timestamp NULL DEFAULT NULL,
-  `IndividualBillID` int(11) DEFAULT NULL
+  `IndividualBillID` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -221,11 +221,11 @@ INSERT INTO `payments` (`PaymentID`, `PaymentMoment`, `PaymentValue`) VALUES
 --
 
 CREATE TABLE `products` (
-  `ProductID` int(11) NOT NULL,
+  `ProductID` int(11) UNSIGNED NOT NULL,
   `ProductName` varchar(50) DEFAULT NULL,
   `ProductPrice` double DEFAULT NULL,
   `ProductDesc` varchar(255) DEFAULT NULL,
-  `CategoryID` int(11) DEFAULT NULL
+  `CategoryID` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -246,7 +246,7 @@ INSERT INTO `products` (`ProductID`, `ProductName`, `ProductPrice`, `ProductDesc
 --
 
 CREATE TABLE `waiters` (
-  `WaiterID` int(11) NOT NULL,
+  `WaiterID` int(11) UNSIGNED NOT NULL,
   `WaiterName` varchar(55) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -322,31 +322,31 @@ ALTER TABLE `waiters`
 -- AUTO_INCREMENT de tabela `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `BillID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `BillID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de tabela `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `CategoryID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `individualbills`
 --
 ALTER TABLE `individualbills`
-  MODIFY `IndividualBillID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `IndividualBillID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `orderitem`
 --
 ALTER TABLE `orderitem`
-  MODIFY `OrderItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `OrderItemID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `OrderID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `payments`
@@ -358,13 +358,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT de tabela `products`
 --
 ALTER TABLE `products`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ProductID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `waiters`
 --
 ALTER TABLE `waiters`
-  MODIFY `WaiterID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `WaiterID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para despejos de tabelas

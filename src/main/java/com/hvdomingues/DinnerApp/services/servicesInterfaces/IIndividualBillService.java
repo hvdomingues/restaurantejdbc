@@ -10,9 +10,11 @@ public interface IIndividualBillService {
 	
 	List<IndividualBill> saveAll(List<IndividualBill> toSave);
 	
-	List<IndividualBill> getAll();
+	List<IndividualBill> getAll(Integer billid);
+	
 	
 	IndividualBill getByID(Integer id);
+	
 	
 
 	

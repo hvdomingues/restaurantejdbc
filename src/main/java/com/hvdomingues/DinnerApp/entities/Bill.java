@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "bills")
@@ -29,6 +31,7 @@ public class Bill implements Serializable{
 	@Column(name = "StatusBill", nullable = false)
 	private Integer statusBill;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "bill", fetch = FetchType.EAGER)
 	private List<IndividualBill> individualBills;
 	

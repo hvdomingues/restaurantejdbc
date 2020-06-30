@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="div-principal">
     <div v-show="principal">
       <div class="btn-group" role="group" style="margin: 30px" aria-label="Exemplo básico">
         <button type="button" class="btn btn-outline-secondary" v-on:click="getBills()">Atualizar</button>
@@ -34,7 +34,7 @@
                   <img src="../assets/table.png" class="icone" width="20" height="25" />
                   Conta: {{ bill.id }}
                 </h5>
-                <a class="btn btn-primary" v-on:click="showBill(bills[index])">Go somewhere</a>
+                <a class="btn btn-primary" v-on:click="showBill(index)">Contas individuais</a>
               </div>
             </div>
           </div>
@@ -67,6 +67,7 @@
               <button
                 id="closeButton"
                 type="button"
+                v-on:click="errorMessage=null"
                 class="btn btn-secondary"
                 data-dismiss="modal"
               >Close</button>
@@ -76,14 +77,14 @@
         </div>
       </div>
     </div>
-    <WaiterBill :bill="bills[0]" v-if="!principal"/>
+    <WaiterBill  v-on:voltar="principal= true; getBills()"  :bill="bills[index]" v-if="!principal"/>
   </div>
 </template>
 
 
 <script>
 import BillService from "../services/bills.js";
-import WaiterBill from "./WaiterBill.vue"
+import WaiterBill from "./WaiterBill.vue";
 
 export default {
   name: "Bill",
@@ -96,13 +97,14 @@ export default {
       numeroMesa: null,
       errorMessage: null,
       sucess: false,
-      principal: true
+      principal: true,
+      index: null
     };
   },
   created() {
     this.getBills();
   },
-  components:{
+  components: {
     WaiterBill
   },
   methods: {
@@ -112,6 +114,7 @@ export default {
         BillService.listActive()
           .then(response => {
             this.bills = response.data;
+            this.errored = false;
           })
           .catch(error => {
             console.log(error);
@@ -122,6 +125,7 @@ export default {
         BillService.listInactive()
           .then(response => {
             this.bills = response.data;
+            this.errored = false;
           })
           .catch(error => {
             console.log(error);
@@ -139,7 +143,8 @@ export default {
       this.getBills();
     },
     createBill() {
-      BillService.create(this.numeroMesa)
+      if(this.numeroMesa >= 1){
+        BillService.create(this.numeroMesa)
         .then(response => {
           console.log(response.data);
           this.numeroMesa = null;
@@ -151,16 +156,23 @@ export default {
           this.errorMessage = error.response.data.message;
           this.numeroMesa = null;
         });
+      }else if(this.numeroMesa <= 0){
+        this.errorMessage = "Digite um número maior que zero, por favor."
+      }
+      else{
+        this.errorMessage = "Digite o número da mesa, por favor."
+      }
+      
     },
-    showBill(bill) {
-      console.log(bill.id);
-      this.principal= false;
+    showBill(index) {
+      this.index = index;
+      this.principal = false;
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .icone {
   margin-right: 5px;
   margin-bottom: 2px;
