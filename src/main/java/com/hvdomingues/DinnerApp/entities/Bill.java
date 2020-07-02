@@ -42,7 +42,6 @@ public class Bill implements Serializable{
 	}
 	
 	
-	
 	public Bill(Integer tableNumber) {
 		this.tableNumber = tableNumber;
 		this.statusBill = 0;

@@ -3,7 +3,7 @@
     <div id="top">
       <NavBar v-on:mudarPagina="mudarPagina" />
     </div>
-    <div id="conteudo" class="container text-center">
+    <div id="conteudo" class="container">
       <PaginaPrincipal v-if="pagina === 0" />
       <Bill v-if="pagina === 1" />
       <Relatorios v-if="pagina === 2" />

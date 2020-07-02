@@ -16,18 +16,21 @@ public class IndividualBillServiceImpl implements IIndividualBillService {
 
 	@Autowired
 	private IIndividualBillRepository indBillRepo;
-	
 
 	@Override
 	public IndividualBill saveOne(IndividualBill toSave) {
-
+		
+		System.out.println(toSave.getBill());
+		
 		if (toSave.getBill() == null || toSave.getBill().getStatusBill() == 1) {
 			throw new MyException2("Impossível criar conta individual sem uma conta principal ativa.");
 		}
 		List<IndividualBill> indBills = toSave.getBill().getIndividualBills();
-		for (IndividualBill indBill : indBills) {
-			if (indBill.getTabPosition() == toSave.getTabPosition()) {
-				throw new MyException2("Já há uma conta individual para esse lugar da mesa.");
+		if (indBills != null) {
+			for (IndividualBill indBill : indBills) {
+				if (indBill.getTabPosition() == toSave.getTabPosition()) {
+					throw new MyException2("Já há uma conta individual para esse lugar da mesa.");
+				}
 			}
 		}
 

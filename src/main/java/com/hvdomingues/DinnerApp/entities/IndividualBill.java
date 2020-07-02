@@ -60,7 +60,9 @@ public class IndividualBill implements Serializable{
 		this.observation = observation;
 		this.tabPosition = tabPosition;
 		this.statusBill = 0;
-	}
+		this.tipPaid = 0.0;
+		this.totalPaid =0.0;
+		}
 
 	public Integer getId() {
 		return id;

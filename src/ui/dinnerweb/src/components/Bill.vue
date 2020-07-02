@@ -1,6 +1,6 @@
 <template>
   <div id="div-principal">
-    <div v-show="principal">
+    <div v-show="principal" class="text-center">
       <div class="btn-group" role="group" style="margin: 30px" aria-label="Exemplo básico">
         <button type="button" class="btn btn-outline-secondary" v-on:click="getBills()">Atualizar</button>
         <button type="button" class="btn btn-outline-secondary" v-on:click="changeBillType()">
