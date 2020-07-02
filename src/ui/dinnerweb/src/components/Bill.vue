@@ -2,11 +2,24 @@
   <div id="div-principal">
     <div v-show="principal" class="text-center">
       <div class="btn-group" role="group" style="margin: 30px" aria-label="Exemplo básico">
-        <button type="button" class="btn btn-outline-secondary" v-on:click="getBills()">Atualizar</button>
-        <button type="button" class="btn btn-outline-secondary" v-on:click="changeBillType()">
-          Ver contas
-          <span v-if="billType">inativas</span>
-          <span v-else>ativas</span>
+        <button type="button" class="btn btn-outline-secondary" v-on:click="getBills()">
+          <svg
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            class="bi bi-arrow-repeat"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"
+            />
+          </svg>
         </button>
         <button
           type="button"
@@ -22,17 +35,17 @@
       <section v-else>
         <div v-if="loading">Carregando...</div>
         <div class="row">
-          <div class="col-sm-3" v-for="(bill, index) in bills" :key="bill.id">
+          <div
+            class="col-sm-3"
+            v-for="(bill, index) in bills"
+            :key="bill.id"
+            style="margin-top:10px"
+          >
             <div class="card">
               <div class="card-body">
-                <!-- Se for conta ativa mostra pelo número da mesa, caso seja conta inativa mostra pelo ID da conta -->
-                <h5 class="card-title" v-if="billType">
+                <h5 class="card-title">
                   <img src="../assets/table.png" class="icone" width="20" height="25" />
                   Mesa: {{ bill.tableNumber }}
-                </h5>
-                <h5 class="card-title" v-if="!billType">
-                  <img src="../assets/table.png" class="icone" width="20" height="25" />
-                  Conta: {{ bill.id }}
                 </h5>
                 <a class="btn btn-primary" v-on:click="showBill(index)">Contas individuais</a>
               </div>
@@ -77,7 +90,7 @@
         </div>
       </div>
     </div>
-    <WaiterBill  v-on:voltar="principal= true; getBills()"  :bill="bills[index]" v-if="!principal"/>
+    <WaiterBill v-on:voltar="principal= true; getBills()" :bill="bills[index]" v-if="!principal" />
   </div>
 </template>
 
@@ -93,7 +106,6 @@ export default {
       bills: null,
       loading: true,
       errored: false,
-      billType: true,
       numeroMesa: null,
       errorMessage: null,
       sucess: false,
@@ -110,59 +122,36 @@ export default {
   methods: {
     getBills() {
       this.loading = true;
-      if (this.billType) {
-        BillService.listActive()
-          .then(response => {
-            this.bills = response.data;
-            this.errored = false;
-          })
-          .catch(error => {
-            console.log(error);
-            this.errored = true;
-          })
-          .finally(() => (this.loading = false));
-      } else {
-        BillService.listInactive()
-          .then(response => {
-            this.bills = response.data;
-            this.errored = false;
-          })
-          .catch(error => {
-            console.log(error);
-            this.errored = true;
-          })
-          .finally(() => (this.loading = false));
-      }
-    },
-    changeBillType() {
-      if (this.billType) {
-        this.billType = false;
-      } else {
-        this.billType = true;
-      }
-      this.getBills();
-    },
-    createBill() {
-      if(this.numeroMesa >= 1){
-        BillService.create(this.numeroMesa)
+      BillService.listActive()
         .then(response => {
-          console.log(response.data);
-          this.numeroMesa = null;
-          this.errorMessage = null;
-          this.sucess = true;
-          this.getBills();
+          this.bills = response.data;
+          this.errored = false;
         })
         .catch(error => {
-          this.errorMessage = error.response.data.message;
-          this.numeroMesa = null;
-        });
-      }else if(this.numeroMesa <= 0){
-        this.errorMessage = "Digite um número maior que zero, por favor."
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    createBill() {
+      if (this.numeroMesa >= 1) {
+        BillService.create(this.numeroMesa)
+          .then(response => {
+            console.log(response.data);
+            this.numeroMesa = null;
+            this.errorMessage = null;
+            this.sucess = true;
+            this.getBills();
+          })
+          .catch(error => {
+            this.errorMessage = error.response.data.message;
+            this.numeroMesa = null;
+          });
+      } else if (this.numeroMesa <= 0) {
+        this.errorMessage = "Digite um número maior que zero, por favor.";
+      } else {
+        this.errorMessage = "Digite o número da mesa, por favor.";
       }
-      else{
-        this.errorMessage = "Digite o número da mesa, por favor."
-      }
-      
     },
     showBill(index) {
       this.index = index;
