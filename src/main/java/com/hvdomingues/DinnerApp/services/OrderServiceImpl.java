@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hvdomingues.DinnerApp.entities.IndividualBill;
 import com.hvdomingues.DinnerApp.entities.Order;
 import com.hvdomingues.DinnerApp.repositories.IOrderRepository;
 import com.hvdomingues.DinnerApp.services.servicesInterfaces.IOrderService;
@@ -29,8 +30,10 @@ public class OrderServiceImpl implements IOrderService{
 	}
 
 	@Override
-	public List<Order> getAll() {
-		return orderRepo.findAll();
+	public List<Order> getAll(Integer indBillID) {
+		IndividualBill indBill = new IndividualBill();
+		indBill.setId(indBillID);
+		return orderRepo.findByIndBill(indBill);
 	}
 
 	@Override

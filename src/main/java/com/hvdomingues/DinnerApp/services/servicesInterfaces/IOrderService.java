@@ -11,7 +11,7 @@ public interface IOrderService {
 		
 		Order saveOne(Order toSave);
 		
-		List<Order> getAll();
+		List<Order> getAll(Integer indBillID);
 		
 		List<Order> saveAll(List<Order> toSave);
 	

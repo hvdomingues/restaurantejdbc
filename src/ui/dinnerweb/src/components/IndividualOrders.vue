@@ -21,7 +21,7 @@
             />
           </svg>
         </button>
-        <button class="btn btn-outline-secondary">
+        <button class="btn btn-outline-secondary" v-on:click="createOrder()">
           <svg
             width="1em"
             height="1em"
@@ -44,9 +44,13 @@
 
       <h3 v-if="orders.length === 0">Ainda nao há pedidos registrados.</h3>
       <div class="row" v-else>
-        <div class="col-sm-3" style="margin-top:10px" v-for="order in orders" :key="order.id">
+        <div class="col-sm-3" style="margin-top:10px" v-for="(order,index) in orders" :key="order.id">
           <div class="card">
             <div class="card-body">
+              <h4>Pedido #{{index + 1}}</h4>
+              <h5 v-if="order.orderItem != null">Preço total do pedido: R${{calculaTotal(index)}} </h5>
+              <h5 v-if="getOverallStatus(index)">Status: Pedido entregue</h5>
+              <h5 v-else>Status: Em andamento</h5>
               <a class="btn btn-primary">Abrir</a>
             </div>
           </div>
@@ -74,6 +78,33 @@ export default {
   methods: {
     voltar() {
       this.$emit("voltar");
+    },
+    calculaTotal(index){
+      let totalPrice = 0.0;
+      let orderItems = [];
+
+      orderItems = this.orders[index].orderItem;
+    
+      for (let index = 0; index < orderItems.length; index++) {
+        totalPrice += orderItems[index].itemPrice;
+        
+      }
+
+      return totalPrice;
+    },
+    createOrder(){
+      return null;
+    },
+    getOverallStatus(index){
+
+      let orderItems = this.orders[index].orderItem;
+
+      for (let index = 0; index < orderItems.length; index++) {
+        if(orderItems[index].status != "Item entregue"){
+          return false;
+        }
+      }
+      return true;
     }
   }
 };

@@ -69,6 +69,16 @@ public class Order implements Serializable{
 	public void setIndBill(IndividualBill indBill) {
 		this.indBill = indBill;
 	}
+	
+	
+
+	public List<OrderItem> getOrderItem() {
+		return orderItem;
+	}
+
+	public void setOrderItem(List<OrderItem> orderItem) {
+		this.orderItem = orderItem;
+	}
 
 	@Override
 	public int hashCode() {

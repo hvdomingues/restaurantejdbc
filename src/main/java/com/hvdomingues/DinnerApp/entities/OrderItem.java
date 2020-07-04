@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hvdomingues.DinnerApp.entities.enums.OrderItemStatus;
 
 @Entity
 @Table(name = "orderitem")
@@ -30,6 +31,9 @@ public class OrderItem implements Serializable{
 	
 	@Column(name = "ItemPrice")
 	private Double itemPrice;
+	
+	@Column(name = "Status")
+	private Integer status;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -49,6 +53,7 @@ public class OrderItem implements Serializable{
 		this.product = product;
 		this.itemPrice = product.getPrice();
 		this.observation = observation;
+		setStatus(OrderItemStatus.SENT);
 	}
 
 	public Integer getId() {
@@ -77,6 +82,17 @@ public class OrderItem implements Serializable{
 		this.itemPrice = this.product.getPrice();
 	}
 
+	public String getStatus() {
+		return OrderItemStatus.valueOf(status).getDescripton();
+	}
+
+	public void setStatus(OrderItemStatus orderItemStatus) {
+		if(orderItemStatus != null) {
+			this.status = orderItemStatus.getCode();
+		}
+		
+	}
+	
 	public Order getOrder() {
 		return order;
 	}
@@ -93,7 +109,8 @@ public class OrderItem implements Serializable{
 		this.product = product;
 	}
 	
-
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

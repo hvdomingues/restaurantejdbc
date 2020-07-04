@@ -16,22 +16,27 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" v-on:click="mudarPagina(0)">
+            <a class="nav-link" v-on:click="mudarPagina(0)" data-toggle="collapse" data-target=".navbar-collapse.show">
               Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" v-on:click="mudarPagina(1)">Bills</a>
+            <a class="nav-link" v-on:click="mudarPagina(1)" data-toggle="collapse" data-target=".navbar-collapse.show">Bills</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" v-on:click="mudarPagina(2)">Relatórios</a>
+            <a class="nav-link" v-on:click="mudarPagina(2)" data-toggle="collapse" data-target=".navbar-collapse.show">Relatórios</a>
           </li>
         </ul>
         <span class="navbar-text">
-          <a href="https://github.com/hvdomingues/restaurantejdbc" target="_blank">
+          <a href="https://github.com/hvdomingues/restaurantejdbc" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.show">
             <img src="../assets/github.png" width="20" height="20" />
           </a>
         </span>
+
+
+
+
+        
       </div>
     </nav>
   </div>
