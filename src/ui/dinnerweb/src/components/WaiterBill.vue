@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div  style="width:100%">
     <div v-show="principalInd" class="text-center">
       <div class="btn-group" role="group" style="margin: 30px">
         <button v-on:click="voltar()" class="btn btn-outline-secondary">

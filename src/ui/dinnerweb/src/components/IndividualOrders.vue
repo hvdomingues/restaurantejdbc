@@ -43,7 +43,7 @@
       </div>
 
       <h3 v-if="orders.length === 0">Ainda nao há pedidos registrados.</h3>
-      <div class="row" v-else>
+      <div class="row" style="text-center" v-else>
         <div class="col-sm-3" style="margin-top:10px" v-for="(order,index) in orders" :key="order.id">
           <div class="card">
             <div class="card-body">
@@ -51,16 +51,19 @@
               <h5 v-if="order.orderItem != null">Preço total do pedido: R${{calculaTotal(index)}} </h5>
               <h5 v-if="getOverallStatus(index)">Status: Pedido entregue</h5>
               <h5 v-else>Status: Em andamento</h5>
-              <a class="btn btn-primary">Abrir</a>
+              <a class="btn btn-primary" v-on:click="showOrder(index)">Abrir</a>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <Order v-on:voltar="principalOrders= true;" v-if="!principalOrders" :order="orders[index]" />
   </div>
 </template>
 
 <script>
+import Order from "./Order.vue"
+
 export default {
   name: "IndividualOrders",
   props: {
@@ -72,8 +75,12 @@ export default {
   data(){
       return{
           principalOrders: true,
-          orders: this.individualBill.orders
+          orders: this.individualBill.orders,
+          index: null
       }
+  },
+  components:{
+    Order
   },
   methods: {
     voltar() {
@@ -105,6 +112,11 @@ export default {
         }
       }
       return true;
+    },
+    showOrder(index){
+      this.index = index;
+      this.principalOrders = false;
+
     }
   }
 };

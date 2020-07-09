@@ -3,7 +3,7 @@
     <div id="top">
       <NavBar v-on:mudarPagina="mudarPagina" />
     </div>
-    <div id="conteudo" class="container">
+    <div id="conteudo">
       <PaginaPrincipal v-if="pagina === 0" />
       <Bill v-if="pagina === 1" />
       <Relatorios v-if="pagina === 2" />
@@ -52,11 +52,13 @@ div#app {
 
 div#conteudo {
   height: 100%;
+  width: 100%;
   align-items: center;
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: center;
+padding: 10%;
 }
 
 
