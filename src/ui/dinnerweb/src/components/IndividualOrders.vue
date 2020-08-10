@@ -57,12 +57,14 @@
         </div>
       </div>
     </div>
-    <Order v-on:voltar="principalOrders= true;" v-if="!principalOrders" :order="orders[index]" />
+    <Order v-on:voltar="principalOrders= true; orderPage=false;" v-if="orderPage" :order="orders[index]" />
+    <Menu v-if="menuPage"/>
   </div>
 </template>
 
 <script>
 import Order from "./Order.vue"
+import Menu from "./Menu.vue"
 
 export default {
   name: "IndividualOrders",
@@ -76,11 +78,15 @@ export default {
       return{
           principalOrders: true,
           orders: this.individualBill.orders,
-          index: null
+          index: null,
+          orderPage: false,
+          menuPage: false,
+
       }
   },
   components:{
-    Order
+    Order,
+    Menu,
   },
   methods: {
     voltar() {
@@ -100,7 +106,8 @@ export default {
       return totalPrice;
     },
     createOrder(){
-      return null;
+      this.principalOrders = false;
+      this.menuPage = true;
     },
     getOverallStatus(index){
 
@@ -116,6 +123,7 @@ export default {
     showOrder(index){
       this.index = index;
       this.principalOrders = false;
+      this.orderPage = true;
 
     }
   }

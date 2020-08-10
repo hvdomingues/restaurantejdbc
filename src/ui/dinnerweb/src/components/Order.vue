@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="topo" class="text-center">
-      <div class="btn-group" role="group" style="margin: 30px">
+      
         <button v-on:click="voltar()" class="btn btn-outline-secondary">
           <svg
             width="1em"
@@ -21,26 +21,8 @@
             />
           </svg>
         </button>
-        <button class="btn btn-outline-secondary">
-          <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            class="bi bi-plus"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"
-            />
-          </svg>
-        </button>
-      </div>
+        
+      
     </div>
     <v-row justify="center">
       <v-expansion-panels accordion>
@@ -54,10 +36,13 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-row>
+
   </div>
 </template>
 
 <script>
+
+
 export default {
   name: "Order",
 
@@ -67,10 +52,13 @@ export default {
       required: true
     }
   },
+  components:{
+
+  },
   data() {
     return {
       orderItens: [],
-      itens: []
+      itens: [],
     };
   },
   methods: {
